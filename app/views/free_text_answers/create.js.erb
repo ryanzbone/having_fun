@@ -1,0 +1,5 @@
+var textnode = document.createTextNode("<%= @free_text_answer.text %>");
+document.getElementById("answers").appendChild(textnode);
+
+var result = "<%= escape_javascript(render partial: "games/free_text_question", locals: { question: @next_question, free_text_answer: FreeTextAnswer.new }) %>";
+document.getElementById("question").innerHTML = result;

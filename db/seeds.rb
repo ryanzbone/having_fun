@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+#
+
+FreeTextAnswer.destroy_all
+FreeTextQuestion.destroy_all
+
+10.times do
+  FreeTextQuestion.find_or_create_by text: Faker::TvShows::TwinPeaks.quote
+end

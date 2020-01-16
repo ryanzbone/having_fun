@@ -1,6 +1,5 @@
 %h3 A Question
+#question
+  = render partial: "games/free_text_question", locals: { question: @question, free_text_answer: FreeTextAnswer.new }
 
-%p= @question.text
-= form_with model: @free_text_answer, url: free_text_answers_path do |f|
-  = f.text_field :text
-  = f.submit
+#answers
