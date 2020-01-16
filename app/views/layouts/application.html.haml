@@ -10,4 +10,8 @@
   %body
     %h1 I know you're having fun
     %h2 (but I'm still working)
+    - flash.map do |msg_type, message|
+      .flash= message
+
+
     = yield

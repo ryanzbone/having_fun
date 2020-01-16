@@ -1,3 +1,6 @@
 %h3 A Question
 
 %p= @question.text
+= form_with model: @free_text_answer, url: free_text_answers_path do |f|
+  = f.text_field :text
+  = f.submit
