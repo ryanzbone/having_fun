@@ -3,31 +3,3 @@ document.getElementById("answers").appendChild(textnode);
 
 var result = "<%= escape_javascript(render partial: "games/free_text_question", locals: { question: @next_question, free_text_answer: FreeTextAnswer.new }) %>";
 document.getElementById("question").innerHTML = result;
-
-// this is the window manager with one of the default options changed
-var wm = new WM({ backgroundColorWindow: 'green' });
-
-// enable window snapping to screen edges and other windows when moving
-wm.snap()
-
-// create a window
-var work = wm.createWindow({ width: 800, height: 600, title: 'Work' });
-
-// set content of window
-work.content.innerHTML = "<%= escape_javascript(render partial: 'games/instant_wild') %>"
-
-work.open();
-
-var wm2 = new WM({ backgroundColorWindow: 'red' });
-
-// enable window snapping to screen edges and other windows when moving
-wm2.snap()
-// create a window
-var stream = wm2.createWindow({ width: 600, height: 800, title: 'Having Fun' });
-
-// set content of window
-stream.content.innerHTML = "<%= escape_javascript(render partial: 'games/stream') %>"
-
-// open the windows
-
-stream.open();
