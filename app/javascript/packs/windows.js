@@ -58,3 +58,40 @@ export function play()
   });
   return test
 }
+
+export function moveWindow(toMove, targetWindow) {
+  var timer = 0;
+  var duration = 200
+  var id = setInterval(frame, 10);
+
+  var targetX = targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2);
+  var targetY = targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2);
+
+  function direction(moverPoint, targetPoint, distance) {
+    if(moverPoint < targetPoint) {
+      return distance;
+    } else {
+      return -distance;
+    }
+  }
+
+  function frame() {
+    var closeToX = closeTo(toMove.x, targetX, 5);
+    var closeToY = closeTo(toMove.y, targetY, 5);
+
+    if (timer >= duration || closeToX || closeToY) {
+      clearInterval(id);
+    } else {
+      timer++;
+      toMove.focus();
+      toMove.move(
+        toMove.x + direction(toMove.x, targetX, 2),
+        toMove.y + direction(toMove.y, targetY, 2),
+      );
+    }
+  }
+
+  function closeTo(actual, target, error) {
+    return (target - error) <= actual && actual <= (target + error);
+  }
+}
