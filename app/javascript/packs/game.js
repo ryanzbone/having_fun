@@ -9,6 +9,9 @@ function moveWindow(toMove, targetWindow) {
   var duration = 200
   var id = setInterval(frame, 10);
 
+  var targetX = targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2);
+  var targetY = targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2);
+
   function direction(moverPoint, targetPoint, distance) {
     if(moverPoint < targetPoint) {
       return distance;
@@ -18,16 +21,15 @@ function moveWindow(toMove, targetWindow) {
   }
 
   function frame() {
-    if (distance >= duration || toMove.x == targetWindow.x || toMove.y == targetWindow.y) {
+    if (distance >= duration || toMove.x == targetX || toMove.y == targetY) {
       clearInterval(id);
     } else {
       distance++;
       toMove.focus();
       toMove.move(
-        toMove.x + direction(toMove.x, targetWindow.x, 2),
-        toMove.y + direction(toMove.y, targetWindow.y, 2),
+        toMove.x + direction(toMove.x, targetX, 2),
+        toMove.y + direction(toMove.y, targetY, 2),
       );
-      console.log(distance)
     }
   }
 }
@@ -55,6 +57,7 @@ window.onload = () =>
 
   document.getElementById('test').addEventListener('click', function(event) {
     event.preventDefault();
+    playWindow.resize(500, 500);
     moveWindow(playWindow, workWindow);
   });
 }

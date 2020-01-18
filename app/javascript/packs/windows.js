@@ -26,7 +26,7 @@ export function apps()
 export function work()
 {
   const test = wm.createWindow({
-    width: 1000,
+    width: 1200,
     height: 800,
     x: 100, y: 100,
     title: "I'm Still Working",
