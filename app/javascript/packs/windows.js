@@ -30,6 +30,24 @@ export function appIcon(idName, appWindow, x, y)
   return test
 }
 
+export function quiz()
+{
+  const test = wm.createWindow({
+    width: 1200,
+    height: 800,
+    x: 100, y: 100,
+    titlebar: false,
+    maximizable: false,
+    minimizable: false,
+    resizable: false,
+    closable: false,
+    movable: false
+  })
+  test.content.style.padding = '0.5em'
+  test.content.innerHTML = '<button id="submit-quiz">Start Working</button>'
+  return test
+}
+
 export function work()
 {
   const test = wm.createWindow({
@@ -60,9 +78,28 @@ export function play()
   })
   test.content.style.padding = '0.5em'
   test.content.style.backgroundColor = 'black'
-  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://player.twitch.tv/?channel=shinybreeder"></iframe>'
+  test.content.innerHTML='<div id="twitch-embed" class="full-frame"></div>'
+  var embed = new Twitch.Embed("twitch-embed", {
+    width: test.width,
+    height: test.height - 56,
+    channel: "dodgeballcanada",
+    layout: "video",
+    autoplay: false
+  });
+  console.log(test.height);
+  console.log(test.titlebarHeight);
+  //test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://player.twitch.tv/?channel=shinybreeder"></iframe>'
   test.on('close', function(event) {
     test.open();
+  });
+  test.on('open', function(event) {
+    var player = embed.getPlayer();
+    player.play();
+    player.setMuted(false);
+    var iframe = document.getElementById('twitch-embed').querySelector('iframe');
+    iframe.removeAttribute('width');
+    iframe.removeAttribute('height');
+    iframe.classList.add('full-frame');
   });
   return test
 }
@@ -71,11 +108,14 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
   var timer = 0;
   var duration = 200
   var id = setInterval(frame, 10);
+  var scaleRatio = 1.77;
 
   var targetX = targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2);
   var targetY = targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2);
-  var targetWidth = (Math.random() + 0.0)  * targetWindow.width;
-  var targetHeight= toMove.width / 1.6;
+  var targetWidth = 400 + (Math.random() + 0.0) * targetWindow.width;
+  var targetHeight = toMove.width / scaleRatio;
+
+  var iframe = document.getElementById('twitch-embed').querySelector('iframe');
 
   function direction(moverPoint, targetPoint, distance) {
     if(moverPoint < targetPoint) {
@@ -99,14 +139,15 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
         toMove.y + direction(toMove.y, targetY, moveSpeed),
       );
       if(toMove.width <= targetWidth) {
-        toMove.width = toMove.width + 1;
-      } else {
-        toMove.width = toMove.width - 1;
-      }
-      if(toMove.height <= targetHeight) {
-        toMove.height = toMove.height + 1;
-      } else {
-        toMove.height = toMove.height - 1;
+        toMove.width = toMove.width + moveSpeed;
+        toMove.height = toMove.height + (moveSpeed/scaleRatio);
+        player.setAttribute('width', parseInt(player.getAttribute('width')) + moveSpeed)
+        player.setAttribute('height', parseInt(player.getAttribute('height')) + (moveSpeed/scaleRatio))
+      } else if(toMove.width > targetWidth) {
+        toMove.width = toMove.width - moveSpeed;
+        toMove.height = toMove.height - (moveSpeed/scaleRatio);
+        player.setAttribute('width', parseInt(player.getAttribute('width')) - moveSpeed)
+        player.setAttribute('height', parseInt(player.getAttribute('height')) - (moveSpeed/scaleRatio))
       }
     }
   }
