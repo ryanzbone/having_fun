@@ -2,27 +2,6 @@ const wm = new WM({
   borderRadius: '10px'
 })
 
-export function apps()
-{
-  const test = wm.createWindow({
-    width: 300,
-    height: 200,
-    x: 10, y: 10,
-    title: "Applications",
-    maximizable: false,
-    minimizable: false,
-    closable: false,
-    movable: false
-  })
-  test.content.style.padding = '0.5em'
-  test.content.innerHTML = `
-    <a href="#" id="work">Work</a><br/>
-    <a href="#" id="play">Play</a><br/>
-    <a href="#" id="test">Test</a>
-    `
-  return test
-}
-
 export function appIcon(idName, appWindow, x, y)
 {
   const test = wm.createWindow({

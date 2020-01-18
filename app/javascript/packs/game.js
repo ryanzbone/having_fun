@@ -1,5 +1,4 @@
 import {
-  apps,
   work,
   play,
   moveWindow,
