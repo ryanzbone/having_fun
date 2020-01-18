@@ -1,8 +1,27 @@
-import { apps, work, stream } from './windows.js';
+import { apps, work, play } from './windows.js';
+
+var appsWindow = apps();
+var workWindow = work();
+var playWindow = play();
 
 window.onload = () =>
 {
-  apps().open()
-  work().open()
-  stream().open()
+  appsWindow.open()
+
+  document.getElementById('work').addEventListener('click', function(event) {
+    event.preventDefault();
+    if(workWindow.closed) {
+      workWindow.open();
+    } else {
+      workWindow.focus();
+    }
+  });
+  document.getElementById('play').addEventListener('click', function(event) {
+    event.preventDefault();
+    if(playWindow.closed) {
+      playWindow.open();
+    } else {
+      playWindow.focus();
+    }
+  });
 }

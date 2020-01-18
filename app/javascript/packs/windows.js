@@ -33,7 +33,7 @@ export function work()
   return test
 }
 
-export function stream()
+export function play()
 {
   const test = wm.createWindow({
     x: 550,
@@ -46,9 +46,11 @@ export function stream()
     maximizable: false,
     minimizable: true,
     titleCenter: true,
-    closable: false
   })
   test.content.style.padding = '0.5em'
   test.content.innerHTML = '<iframe style="position: relative; height:100%; width:100%"" allowfullscreen="true" frameborder="0" height="300" scrolling="no" src="https://player.twitch.tv/?channel=supermcgamer&muted=true" width="400"></iframe>'
+  test.on('close', function(event) {
+    test.open();
+  });
   return test
 }
