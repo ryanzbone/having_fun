@@ -1,8 +1,1 @@
-%h3 A Question
-#question
-  = render partial: "games/free_text_question", locals: { question: @question, free_text_answer: FreeTextAnswer.new }
-
-#answers
-
-#stream
-  %iframe{:allowfullscreen => "true", :frameborder => "0", :height => "720", :scrolling => "no", :src => "https://player.twitch.tv/?channel=supermcgamer&muted=true", :width => "1280"}
+= javascript_pack_tag 'game'
