@@ -1,3 +1,4 @@
+var WM = require('simple-window-manager');
 const wm = new WM({
   borderRadius: '10px'
 })
@@ -39,7 +40,7 @@ export function work()
     maximizable: false,
   })
   test.content.style.padding = '0.5em'
-  test.content.innerHTML = '<iframe style="position: relative; height:100%; width:100%" allowfullscreen="true" frameborder="0" src="https://instantwild.zsl.org/task/159037" width="400"></iframe>'
+  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://instantwild.zsl.org/task/159037"></iframe>'
   return test
 }
 
@@ -58,7 +59,8 @@ export function play()
     titleCenter: true,
   })
   test.content.style.padding = '0.5em'
-  test.content.innerHTML = '<iframe style="position: relative; height:100%; width:100%" frameborder="0" src="https://player.twitch.tv/?channel=shinybreeder"></iframe>'
+  test.content.style.backgroundColor = 'black'
+  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://player.twitch.tv/?channel=shinybreeder"></iframe>'
   test.on('close', function(event) {
     test.open();
   });
