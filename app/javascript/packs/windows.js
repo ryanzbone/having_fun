@@ -23,14 +23,15 @@ export function apps()
   return test
 }
 
-export function workIcon()
+export function appIcon(idName, appWindow, x, y)
 {
   const test = wm.createWindow({
     minWidth: 100,
     minHeight: 100,
     width: 100,
     height: 100,
-    x: 10, y: 10,
+    x: x,
+    y: y,
     titlebar: false,
     maximizable: false,
     minimizable: false,
@@ -38,9 +39,14 @@ export function workIcon()
     closable: false,
     movable: false
   })
-  test.content.innerHTML = `
-    <a href="#" id="work" style="height: 100%;  display: block;">Work</a>
-    `
+  test.on('focus', function(event) {
+    if(appWindow.closed) {
+      appWindow.open();
+    } else {
+      appWindow.focus();
+    }
+    test.sendToBack();
+  });
   return test
 }
 
@@ -55,7 +61,6 @@ export function work()
   })
   test.content.style.padding = '0.5em'
   test.content.innerHTML = '<iframe style="position: relative; height:100%; width:100%" allowfullscreen="true" frameborder="0" src="https://instantwild.zsl.org/task/159037" width="400"></iframe>'
-  test.on('click', function(event) { test.focus() });
   return test
 }
 
