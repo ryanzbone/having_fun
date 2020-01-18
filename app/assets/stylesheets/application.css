@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+.work {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
