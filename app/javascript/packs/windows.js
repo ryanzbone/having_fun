@@ -15,7 +15,11 @@ export function apps()
     movable: false
   })
   test.content.style.padding = '0.5em'
-  test.content.innerHTML = '<a href="#" id="work">Work</a><br/><a href="#" id="play">Play</a>'
+  test.content.innerHTML = `
+    <a href="#" id="work">Work</a><br/>
+    <a href="#" id="play">Play</a><br/>
+    <a href="#" id="test">Test</a>
+    `
   return test
 }
 
