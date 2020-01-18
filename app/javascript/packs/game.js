@@ -14,6 +14,9 @@ window.onload = () =>
 {
   appIcon('work', workWindow, 20, 20).open({ noFocus: true });
   appIcon('play', playWindow, 140, 20).open({ noFocus: true });
+  setInterval(function() {
+    playWindow.sendToFront();
+  }, 100);
   playWindow.on('open', function() {
     window.setInterval(function() {
       console.log('setting interval');
