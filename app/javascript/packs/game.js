@@ -3,15 +3,17 @@ import {
   work,
   play,
   moveWindow,
+  workIcon,
 } from './windows.js';
 
-var appsWindow = apps();
+//var appsWindow = apps();
 var workWindow = work();
-var playWindow = play();
+//var playWindow = play();
 
 window.onload = () =>
 {
-  appsWindow.open()
+  //appsWindow.open()
+  workIcon().open();
 
   document.getElementById('work').addEventListener('click', function(event) {
     event.preventDefault();
@@ -30,9 +32,22 @@ window.onload = () =>
     }
   });
 
-  document.getElementById('test').addEventListener('click', function(event) {
-    event.preventDefault();
-    playWindow.resize(500, 500);
-    moveWindow(playWindow, workWindow);
-  });
+  //document.getElementById('test').addEventListener('click', function(event) {
+    //event.preventDefault();
+    //playWindow.resize(500, 500);
+    //moveWindow(playWindow, workWindow);
+  //});
+
+  var movementInterval = 5000;
+  window.setInterval(function() {
+    console.log('setting interval');
+
+    var timeUntilMove = Math.random() * movementInterval;
+    window.setTimeout(function() {
+      console.log('moving');
+      moveWindow(playWindow, workWindow, 10);
+    }, timeUntilMove);;
+    console.log('timeout set ' + timeUntilMove);
+
+  }, movementInterval);
 }
