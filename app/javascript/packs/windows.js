@@ -32,23 +32,6 @@ export function appIcon(idName, appWindow, x, y, icon)
   return test
 }
 
-export function quiz()
-{
-  const test = wm.createWindow({
-    width: 1200,
-    height: 800,
-    x: 100, y: 100,
-    titlebar: false,
-    maximizable: false,
-    minimizable: false,
-    resizable: false,
-    closable: false,
-    movable: false
-  })
-  test.content.style.padding = '0.5em'
-  test.content.innerHTML = '<button id="submit-quiz">Start Working</button>'
-  return test
-}
 
 export function work()
 {
