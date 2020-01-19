@@ -79,23 +79,12 @@ export function play()
   test.content.style.padding = '0.5em'
   test.content.style.backgroundColor = 'black'
   test.content.innerHTML='<div id="twitch-embed" class="full-frame"></div>'
-  var embed = new Twitch.Embed("twitch-embed", {
-    width: test.width,
-    height: test.height - 56,
-    channel: "dodgeballcanada",
-    layout: "video",
-    autoplay: false
-  });
-  console.log(test.height);
-  console.log(test.titlebarHeight);
-  //test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://player.twitch.tv/?channel=shinybreeder"></iframe>'
-  test.on('close', function(event) {
-    test.open();
-  });
+
   test.on('open', function(event) {
-    var player = embed.getPlayer();
-    player.play();
-    player.setMuted(false);
+    var embed = new Twitch.Embed("twitch-embed", {
+      channel: "dodgeballcanada",
+      layout: "video",
+    });
     var iframe = document.getElementById('twitch-embed').querySelector('iframe');
     iframe.removeAttribute('width');
     iframe.removeAttribute('height');
@@ -107,7 +96,7 @@ export function play()
 export function moveWindow(toMove, targetWindow, moveSpeed) {
   var timer = 0;
   var duration = 200
-  var id = setInterval(frame, 10);
+  var intervalId = setInterval(frame, 10);
   var scaleRatio = 1.77;
 
   var targetX = targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2);
@@ -130,7 +119,7 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
     var closeToY = closeTo(toMove.y, targetY, 20);
 
     if (timer >= duration || closeToX || closeToY) {
-      clearInterval(id);
+      clearInterval(intervalId);
     } else {
       timer++;
       toMove.focus();
@@ -141,13 +130,9 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
       if(toMove.width <= targetWidth) {
         toMove.width = toMove.width + moveSpeed;
         toMove.height = toMove.height + (moveSpeed/scaleRatio);
-        player.setAttribute('width', parseInt(player.getAttribute('width')) + moveSpeed)
-        player.setAttribute('height', parseInt(player.getAttribute('height')) + (moveSpeed/scaleRatio))
       } else if(toMove.width > targetWidth) {
         toMove.width = toMove.width - moveSpeed;
         toMove.height = toMove.height - (moveSpeed/scaleRatio);
-        player.setAttribute('width', parseInt(player.getAttribute('width')) - moveSpeed)
-        player.setAttribute('height', parseInt(player.getAttribute('height')) - (moveSpeed/scaleRatio))
       }
     }
   }
