@@ -76,10 +76,14 @@ export function play()
     iframe.removeAttribute('height');
     iframe.classList.add('full-frame');
   });
+  test.on('close', function(event) {
+    test.open();
+  });
   return test
 }
 
 export function moveWindow(toMove, targetWindow, moveSpeed) {
+  console.log("moving")
   var timer = 0;
   var duration = 200
   var intervalId = setInterval(frame, 10);
@@ -114,10 +118,12 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
 }
 
 export function resizeWindow(target, scaleRate) {
+  console.log("resizing")
   var timer = 0;
   var duration = 200;
   var maxWidth = 1200;
   var minWidth = 400;
+  var minHeight = 300;
   var scaleRatio = 1.77;
 
   var newWidth = minWidth + (Math.random() * maxWidth);

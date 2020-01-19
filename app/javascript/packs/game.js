@@ -7,6 +7,7 @@ import {
 } from './windows.js';
 
 import {
+  titleScreen,
   quiz,
   runQuiz,
 } from './intro.js'
@@ -14,11 +15,23 @@ import {
 var workWindow = work();
 var playWindow = play();
 var quizWindow = quiz();
-var movementInterval = 2000;
+var titleScreenWindow = titleScreen();
+var movementInterval = 4000;
+var resizeInterval = 2000;
 
 window.onload = () =>
 {
-  quizWindow.open()
+  titleScreenWindow.open();
+  document.getElementById('start-game').addEventListener('click', function(event) {
+    event.preventDefault();
+    titleScreenWindow.close();
+    var audio = document.getElementById('audio-introduction');
+    audio.addEventListener('ended', function() {
+      quizWindow.open();
+    });
+    audio.play()
+  });
+
   var score = runQuiz();
 
   document.getElementById('submit-quiz').addEventListener('click', function(event) {
@@ -38,13 +51,24 @@ function desktop() {
     playWindow.sendToFront();
   }, 100);
   playWindow.on('open', function() {
+    // Set move window interval
     window.setInterval(function() {
       var timeUntilMove = Math.random() * movementInterval;
-      window.setTimeout(function() {
-        moveWindow(playWindow, workWindow, 10);
-        //resizeWindow(playWindow, 10);
-      }, timeUntilMove);;
-
+      if(Math.random() > 0.5) {
+        window.setTimeout(function() {
+          moveWindow(playWindow, workWindow, (5 + (Math.random() * 10)));
+        }, timeUntilMove);;
+      }
     }, movementInterval);
+
+    // Set resize window interval
+    window.setInterval(function() {
+      var timeUntilResize = Math.random() * resizeInterval;
+      if(Math.random() > 0.5) {
+        window.setTimeout(function() {
+          resizeWindow(playWindow, Math.random() * 10);
+        }, timeUntilResize);;
+      }
+    }, resizeInterval);
   });
 }
