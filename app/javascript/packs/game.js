@@ -8,7 +8,7 @@ import {
 
 var workWindow = work();
 var playWindow = play();
-var movementInterval = 2000;
+var movementInterval = 7000;
 var quizWindow = quiz();
 
 window.onload = () =>

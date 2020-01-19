@@ -20,7 +20,7 @@ export function appIcon(idName, appWindow, x, y, icon)
     movable: false
   })
   test.content.style.backgroundSize = 'contain';
-  test.content.style.backgroundImage = `url('../../${icon}')`;
+  test.content.style.backgroundImage = `url('../../assets/${icon}')`;
   test.on('focus', function(event) {
     if(appWindow.closed) {
       appWindow.open();
@@ -77,6 +77,7 @@ export function play()
     maximizable: false,
     minimizable: true,
     titleCenter: true,
+    minimizeSize: 200,
   })
   test.content.style.padding = '0.5em'
   test.content.style.backgroundColor = 'black'
@@ -100,10 +101,12 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
   var duration = 200
   var intervalId = setInterval(frame, 10);
   var scaleRatio = 1.77;
+  var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+  var targetMultiplier =  plusOrMinus;;
 
-  var targetX = targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2);
-  var targetY = targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2);
-  var targetWidth = 400 + (Math.random() + 0.0) * targetWindow.width;
+  var targetX = (targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2)) * targetMultiplier;
+  var targetY = (targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2)) * targetMultiplier;
+  var targetWidth = 400 + (Math.random() * targetWindow.width);
   var targetHeight = toMove.width / scaleRatio;
 
   var iframe = document.getElementById('twitch-embed').querySelector('iframe');
