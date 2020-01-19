@@ -109,7 +109,7 @@ export function quiz()
         <label for="q53">Never</label>
       </fieldset>
   </form>
-  <button class="invisible" id="submit-quiz">Start Working</button>
+  <button class="xinvisible" id="submit-quiz">Start Working</button>
 `
   return test
 }

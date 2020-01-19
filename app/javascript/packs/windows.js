@@ -83,16 +83,10 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
   var timer = 0;
   var duration = 200
   var intervalId = setInterval(frame, 10);
-  var scaleRatio = 1.77;
   var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-  var targetMultiplier =  plusOrMinus;;
 
-  var targetX = (targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2)) * targetMultiplier;
-  var targetY = (targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2)) * targetMultiplier;
-  var targetWidth = 400 + (Math.random() * targetWindow.width);
-  var targetHeight = toMove.width / scaleRatio;
-
-  var iframe = document.getElementById('twitch-embed').querySelector('iframe');
+  var targetX = (targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2));
+  var targetY = (targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2));
 
   function direction(moverPoint, targetPoint, distance) {
     if(moverPoint < targetPoint) {
@@ -115,17 +109,37 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
         toMove.x + direction(toMove.x, targetX, moveSpeed),
         toMove.y + direction(toMove.y, targetY, moveSpeed),
       );
-      if(toMove.width <= targetWidth) {
-        toMove.width = toMove.width + moveSpeed;
-        toMove.height = toMove.height + (moveSpeed/scaleRatio);
-      } else if(toMove.width > targetWidth) {
-        toMove.width = toMove.width - moveSpeed;
-        toMove.height = toMove.height - (moveSpeed/scaleRatio);
+    }
+  }
+}
+
+export function resizeWindow(target, scaleRate) {
+  var timer = 0;
+  var duration = 200;
+  var maxWidth = 1200;
+  var minWidth = 400;
+  var scaleRatio = 1.77;
+
+  var newWidth = minWidth + (Math.random() * maxWidth);
+
+  var intervalId = setInterval(frame, 10);
+
+  function frame() {
+    if (timer >= duration || closeTo(target.width, newWidth, scaleRate + 1)) {
+      clearInterval(intervalId);
+    } else {
+      timer++;
+      if(target.width <= newWidth) {
+        target.width = target.width + scaleRate;
+        target.height = target.height + (scaleRate/scaleRatio);
+      } else if(target.width > newWidth) {
+        target.width = target.width - scaleRate;
+        target.height = target.height - (scaleRate/scaleRatio);
       }
     }
   }
+}
 
-  function closeTo(actual, target, error) {
-    return (target - error) <= actual && actual <= (target + error);
-  }
+function closeTo(actual, target, error) {
+  return Math.abs(actual - target) <= error;
 }

@@ -2,6 +2,7 @@ import {
   work,
   play,
   moveWindow,
+  resizeWindow,
   appIcon,
 } from './windows.js';
 
@@ -13,7 +14,7 @@ import {
 var workWindow = work();
 var playWindow = play();
 var quizWindow = quiz();
-var movementInterval = 7000;
+var movementInterval = 2000;
 
 window.onload = () =>
 {
@@ -41,6 +42,7 @@ function desktop() {
       var timeUntilMove = Math.random() * movementInterval;
       window.setTimeout(function() {
         moveWindow(playWindow, workWindow, 10);
+        //resizeWindow(playWindow, 10);
       }, timeUntilMove);;
 
     }, movementInterval);
