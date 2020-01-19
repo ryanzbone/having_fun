@@ -26,8 +26,10 @@ window.onload = () =>
 }
 
 function desktop() {
-  appIcon('work', workWindow, 20, 20).open({ noFocus: true });
-  appIcon('play', playWindow, 140, 20).open({ noFocus: true });
+  appIcon('work', workWindow, 20, 20, null).open({ noFocus: true });
+  appIcon('play', playWindow, 140, 20, null).open({ noFocus: true });
+  appIcon('text', null, 260, 20, 'text.png').open({ noFocus: true });
+  appIcon('trash', null, 380, 20, 'trash.png').open({ noFocus: true });
   setInterval(function() {
     playWindow.sendToFront();
   }, 100);

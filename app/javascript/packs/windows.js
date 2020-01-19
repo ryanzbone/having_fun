@@ -3,7 +3,7 @@ const wm = new WM({
   borderRadius: '10px'
 })
 
-export function appIcon(idName, appWindow, x, y)
+export function appIcon(idName, appWindow, x, y, icon)
 {
   const test = wm.createWindow({
     minWidth: 100,
@@ -19,6 +19,8 @@ export function appIcon(idName, appWindow, x, y)
     closable: false,
     movable: false
   })
+  test.content.style.backgroundSize = 'contain';
+  test.content.style.backgroundImage = `url('../../${icon}')`;
   test.on('focus', function(event) {
     if(appWindow.closed) {
       appWindow.open();
