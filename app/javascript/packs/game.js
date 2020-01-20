@@ -25,28 +25,28 @@ var channels = [
 
 window.onload = () =>
 {
-  //titleScreenWindow.open();
-  //document.getElementById('start-game').addEventListener('click', function(event) {
-    //event.preventDefault();
-    //titleScreenWindow.close();
-    //var audio = document.getElementById('audio-introduction');
-    //audio.addEventListener('ended', function() {
-      //quizWindow.open();
-    //});
-    //audio.play()
-  //});
-  //document.addEventListener('calculateScore', function(event) {
-    //score = event.detail;
-  //});
+  titleScreenWindow.open();
+  document.getElementById('start-game').addEventListener('click', function(event) {
+    event.preventDefault();
+    titleScreenWindow.close();
+    var audio = document.getElementById('audio-introduction');
+    audio.addEventListener('ended', function() {
+      quizWindow.open();
+    });
+    audio.play()
+  });
+  document.addEventListener('calculateScore', function(event) {
+    score = event.detail;
+  });
 
-  //runQuiz();
+  runQuiz();
 
-  //document.getElementById('submit-quiz').addEventListener('click', function(event) {
-    //event.preventDefault();
-    //quizWindow.close();
-    //desktop(score);
-  //});
-  desktop(1);
+  document.getElementById('submit-quiz').addEventListener('click', function(event) {
+    event.preventDefault();
+    quizWindow.close();
+    desktop(score);
+  });
+  //desktop(1);
 }
 
 function desktop(score) {
