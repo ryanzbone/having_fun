@@ -1,9 +1,4 @@
-var WM = require('simple-window-manager');
-const wm = new WM({
-  borderRadius: '10px'
-})
-
-export function appIcon(idName, appWindow, x, y, icon)
+export function appIcon(idName, appWindow, x, y, icon, wm)
 {
   const test = wm.createWindow({
     minWidth: 100,
@@ -20,7 +15,7 @@ export function appIcon(idName, appWindow, x, y, icon)
     movable: false
   })
   test.content.style.backgroundSize = 'contain';
-  test.content.style.backgroundImage = `url('../../assets/${icon}')`;
+  test.content.style.backgroundImage = `url(${icon})`;
   test.on('focus', function(event) {
     if(appWindow.closed) {
       appWindow.open();
@@ -32,8 +27,7 @@ export function appIcon(idName, appWindow, x, y, icon)
   return test
 }
 
-
-export function work()
+export function work(wm)
 {
   const test = wm.createWindow({
     width: 1200,
@@ -47,7 +41,7 @@ export function work()
   return test
 }
 
-export function play(channel)
+export function play(channel, wm)
 {
   const test = wm.createWindow({
     x: 550,

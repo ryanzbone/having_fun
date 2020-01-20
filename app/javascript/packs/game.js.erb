@@ -1,0 +1,103 @@
+<%= include ActionView::Helpers::AssetUrlHelper %>
+import {
+  work,
+  play,
+  moveWindow,
+  resizeWindow,
+  appIcon,
+} from './windows.js';
+
+import {
+  titleScreen,
+  quiz,
+  runQuiz,
+} from './intro.js'
+
+var WM = require('simple-window-manager');
+const wm = new WM({
+  borderRadius: '10px'
+})
+
+var score = 0;
+var quizWindow = quiz(wm);
+var titleScreenWindow = titleScreen(wm);
+var movementInterval = 4000;
+var resizeInterval = 2000;
+var channels = [
+  'im_dontai',
+  'clix',
+  'dodgeballcanada'
+]
+
+window.onload = () =>
+{
+//  titleScreenWindow.open();
+//  document.getElementById('start-game').addEventListener('click', function(event) {
+//    event.preventDefault();
+//    titleScreenWindow.close();
+//    var audio = document.getElementById('audio-introduction');
+//    audio.addEventListener('ended', function() {
+//      quizWindow.open();
+//    });
+//    audio.play()
+//  });
+//  document.addEventListener('calculateScore', function(event) {
+//    score = event.detail;
+//  });
+//
+//  runQuiz();
+//
+//  document.getElementById('submit-quiz').addEventListener('click', function(event) {
+//    event.preventDefault();
+//    quizWindow.close();
+//    desktop(score);
+  //});
+  desktop(1);
+}
+
+function desktop(score) {
+  var workWindow = work(wm);
+  var channel = scoreToChannel(score);
+  var playWindow = play(channel, wm);
+  appIcon('work', workWindow, 20, 20, '<%= image_path('work.png') %>', wm).open({ noFocus: true });
+  appIcon('play', playWindow, 140, 20, '<%= image_path('') %>', wm).open({ noFocus: true });
+  appIcon('text', null, 260, 20, '<%= image_path('text.png') %>', wm).open({ noFocus: true });
+  appIcon('trash', null, 380, 20, '<%= image_path('trash.png') %>', wm).open({ noFocus: true });
+  appIcon('chat', null, 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
+
+
+  playWindow.on('open', function() {
+    setInterval(function() {
+      playWindow.sendToFront();
+    }, 100);
+    // Set move window interval
+    window.setInterval(function() {
+      var timeUntilMove = Math.random() * movementInterval;
+      if(Math.random() > 0.5) {
+        window.setTimeout(function() {
+          moveWindow(playWindow, workWindow, (5 + (Math.random() * 10)));
+        }, timeUntilMove);;
+      }
+    }, movementInterval);
+
+    // Set resize window interval
+    window.setInterval(function() {
+      var timeUntilResize = Math.random() * resizeInterval;
+      if(Math.random() > 0.5) {
+        window.setTimeout(function() {
+          resizeWindow(playWindow, Math.random() * 10);
+        }, timeUntilResize);;
+      }
+    }, resizeInterval);
+  });
+
+  function scoreToChannel(score) {
+    if(score <= 8.33) {
+      return channels[0];
+    } else if (score <= 11.66) {
+      return channels[1];
+    } else {
+      return channels[2];
+    }
+  }
+}
