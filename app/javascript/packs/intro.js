@@ -95,14 +95,14 @@ export function quiz()
   })
   test.content.style.padding = '0.5em'
   test.content.innerHTML = `
-    <audio id="audio-introduction"  src="assets/clip1.mp3" type="audio/mp3"></audio>
+    <audio id="audio-introduction"  src="clip1.mp3" type="audio/mp3"></audio>
     <form id="quiz">
       <fieldset id="group1" class="centered question">
         <p class="mb-2 question-text">I lose interest quickly if I don't get to learn new things.</p>
         <button class="button-question btn" value=1 name="group1">Always</button>
         <button class="button-question btn" value=2 name="group1">Sometimes</button>
         <button class="button-question btn" value=3 name="group1">Never</button>
-        <audio src="assets/clip2.mp3" type="audio/mp3"></audio>
+        <audio src="clip2.mp3" type="audio/mp3"></audio>
       </fieldset>
 
       <fieldset id="group2" class="centered question invisible">
@@ -110,7 +110,7 @@ export function quiz()
         <button class="button-question btn" value=1 name="group1">Always</button>
         <button class="button-question btn" value=2 name="group1">Sometimes</button>
         <button class="button-question btn" value=3 name="group1">Never</button>
-        <audio src="assets/clip3.mp3" type="audio/mp3"></audio>
+        <audio src="clip3.mp3" type="audio/mp3"></audio>
       </fieldset>
 
       <fieldset id="group3" class="centered question invisible">
@@ -118,7 +118,7 @@ export function quiz()
         <button class="button-question btn" value=1 name="group1">Always</button>
         <button class="button-question btn" value=2 name="group1">Sometimes</button>
         <button class="button-question btn" value=3 name="group1">Never</button>
-        <audio src="assets/clip4.mp3" type="audio/mp3"></audio>
+        <audio src="clip4.mp3" type="audio/mp3"></audio>
       </fieldset>
 
       <fieldset id="group4" class="centered question invisible">
@@ -126,7 +126,7 @@ export function quiz()
         <button class="button-question btn" value=1 name="group1">Always</button>
         <button class="button-question btn" value=2 name="group1">Sometimes</button>
         <button class="button-question btn" value=3 name="group1">Never</button>
-        <audio src="assets/clip5.mp3" type="audio/mp3"></audio>
+        <audio src="clip5.mp3" type="audio/mp3"></audio>
       </fieldset>
 
       <fieldset id="group5" class="centered question invisible">
@@ -134,7 +134,7 @@ export function quiz()
         <button class="button-question btn" value=1 name="group1">Always</button>
         <button class="button-question btn" value=2 name="group1">Sometimes</button>
         <button class="button-question btn" value=3 name="group1">Never</button>
-        <audio src="assets/clip6.mp3" type="audio/mp3"></audio>
+        <audio src="clip6.mp3" type="audio/mp3"></audio>
       </fieldset>
   </form>
   <div class="centered">
