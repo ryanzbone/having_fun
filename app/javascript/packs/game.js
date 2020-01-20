@@ -12,37 +12,50 @@ import {
   runQuiz,
 } from './intro.js'
 
-var workWindow = work();
-var playWindow = play();
+var score = 0;
 var quizWindow = quiz();
 var titleScreenWindow = titleScreen();
 var movementInterval = 4000;
 var resizeInterval = 2000;
+var channels = [
+  'im_dontai',
+  'clix',
+  'dodgeballcanada'
+]
 
 window.onload = () =>
 {
-  titleScreenWindow.open();
-  document.getElementById('start-game').addEventListener('click', function(event) {
-    event.preventDefault();
-    titleScreenWindow.close();
-    var audio = document.getElementById('audio-introduction');
-    audio.addEventListener('ended', function() {
-      quizWindow.open();
-    });
-    audio.play()
-  });
+  //titleScreenWindow.open();
+  //document.getElementById('start-game').addEventListener('click', function(event) {
+    //event.preventDefault();
+    //titleScreenWindow.close();
+    //var audio = document.getElementById('audio-introduction');
+    //audio.addEventListener('ended', function() {
+      //quizWindow.open();
+    //});
+    //audio.play()
+  //});
+  //document.addEventListener('calculateScore', function(event) {
+    //score = event.detail;
+  //});
 
-  var score = runQuiz();
+  //runQuiz();
 
-  document.getElementById('submit-quiz').addEventListener('click', function(event) {
-    event.preventDefault();
-    quizWindow.close();
-    desktop();
-  });
+  //document.getElementById('submit-quiz').addEventListener('click', function(event) {
+    //event.preventDefault();
+    //quizWindow.close();
+    //desktop(score);
+  //});
+  desktop(1);
 }
 
-function desktop() {
-  appIcon('work', workWindow, 20, 20, null).open({ noFocus: true });
+function desktop(score) {
+  var workWindow = work();
+  var channel = scoreToChannel(score);
+  console.log(score);
+  console.log(channel);
+  var playWindow = play(channel);
+  appIcon('work', workWindow, 20, 20, 'work.png').open({ noFocus: true });
   appIcon('play', playWindow, 140, 20, null).open({ noFocus: true });
   appIcon('text', null, 260, 20, 'text.png').open({ noFocus: true });
   appIcon('trash', null, 380, 20, 'IMG.png').open({ noFocus: true });
@@ -71,4 +84,14 @@ function desktop() {
       }
     }, resizeInterval);
   });
+
+  function scoreToChannel(score) {
+    if(score <= 8.33) {
+      return channels[0];
+    } else if (score <= 11.66) {
+      return channels[1];
+    } else {
+      return channels[2];
+    }
+  }
 }

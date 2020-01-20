@@ -47,7 +47,7 @@ export function work()
   return test
 }
 
-export function play()
+export function play(channel)
 {
   const test = wm.createWindow({
     x: 550,
@@ -68,7 +68,7 @@ export function play()
 
   test.on('open', function(event) {
     var embed = new Twitch.Embed("twitch-embed", {
-      channel: "dodgeballcanada",
+      channel: channel,
       layout: "video",
     });
     var iframe = document.getElementById('twitch-embed').querySelector('iframe');

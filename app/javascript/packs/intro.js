@@ -16,15 +16,14 @@ export function runQuiz() {
         if(context.nextQuestion != null) {
           context.nextQuestion.classList.remove('invisible');
         } else {
-          console.log(score / 5);
+          var scoreEvent = new CustomEvent('calculateScore', { detail: score });
+          document.dispatchEvent(scoreEvent);
           document.getElementById('submit-quiz').classList.remove('invisible');
         }
       });
-
       context.audio.play();
     }
   });
-  return score;
 }
 
 function questionContext() {
@@ -67,10 +66,15 @@ export function titleScreen()
   test.content.backgroundColor = 'black'
   test.content.color = 'white'
   test.content.innerHTML = `
-  <h1>(I Know You're Having Fun But) I'm Still Working</h1>
-  <h3>A Video Game</h3>
-  <p>some explaination about the game</p>
-  <button id="start-game" class="btn">Start Game</button>
+  <div class="centered">
+    <h1 class="play-title">(I Know You're Having Fun But)</h1>
+    <h1 class="work-title">I'm Still Working</h1>
+  </div>
+  <div class="centered title-text">
+    <p class="mb-2">We all have too much fun at work from time to time. In this game you’ll contribute to actual real life important ecology data while dealing with a workplace that likes to have just a little too much fun.</p>
+    <p class="mb-2">If you’d like to contribute to actual real life important ecology data without the fun visit <a href="https://instantwild.zsl.org">instantwild.zsl.org</a></p>
+    <button id="start-game" class="btn">Start Game</button>
+  </div>
   `
   return test
 }
@@ -93,47 +97,49 @@ export function quiz()
   test.content.innerHTML = `
     <audio id="audio-introduction"  src="assets/clip1.mp3" type="audio/mp3"></audio>
     <form id="quiz">
-      <fieldset id="group1" class="question">
-        <p>I lose interest quickly if I don't get to learn new things.</p>
-        <button class="button-question" value=1 name="group1">Always</button>
-        <button class="button-question" value=2 name="group1">Sometimes</button>
-        <button class="button-question" value=3 name="group1">Never</button>
+      <fieldset id="group1" class="centered question">
+        <p class="mb-2 question-text">I lose interest quickly if I don't get to learn new things.</p>
+        <button class="button-question btn" value=1 name="group1">Always</button>
+        <button class="button-question btn" value=2 name="group1">Sometimes</button>
+        <button class="button-question btn" value=3 name="group1">Never</button>
         <audio src="assets/clip2.mp3" type="audio/mp3"></audio>
       </fieldset>
 
-      <fieldset id="group2" class="question invisible">
-        <p>I believe stories are the best way to get a point across.</p>
-        <button class="button-question" value=1 name="group1">Always</button>
-        <button class="button-question" value=2 name="group1">Sometimes</button>
-        <button class="button-question" value=3 name="group1">Never</button>
+      <fieldset id="group2" class="centered question invisible">
+        <p class="mb-2 question-text">I believe stories are the best way to get a point across.</p>
+        <button class="button-question btn" value=1 name="group1">Always</button>
+        <button class="button-question btn" value=2 name="group1">Sometimes</button>
+        <button class="button-question btn" value=3 name="group1">Never</button>
         <audio src="assets/clip3.mp3" type="audio/mp3"></audio>
       </fieldset>
 
-      <fieldset id="group3" class="question invisible">
-        <p>I need to take control of situations that seem to be out of control.</p>
-        <button class="button-question" value=1 name="group1">Always</button>
-        <button class="button-question" value=2 name="group1">Sometimes</button>
-        <button class="button-question" value=3 name="group1">Never</button>
+      <fieldset id="group3" class="centered question invisible">
+        <p class="mb-2 question-text">I need to take control of situations that seem to be out of control.</p>
+        <button class="button-question btn" value=1 name="group1">Always</button>
+        <button class="button-question btn" value=2 name="group1">Sometimes</button>
+        <button class="button-question btn" value=3 name="group1">Never</button>
         <audio src="assets/clip4.mp3" type="audio/mp3"></audio>
       </fieldset>
 
-      <fieldset id="group4" class="question invisible">
-        <p>I believe that even the most disadvantageous peace is better than any direct conflict.</p>
-        <button class="button-question" value=1 name="group1">Always</button>
-        <button class="button-question" value=2 name="group1">Sometimes</button>
-        <button class="button-question" value=3 name="group1">Never</button>
+      <fieldset id="group4" class="centered question invisible">
+        <p class="mb-2 question-text">I believe that even the most disadvantageous peace is better than any direct conflict.</p>
+        <button class="button-question btn" value=1 name="group1">Always</button>
+        <button class="button-question btn" value=2 name="group1">Sometimes</button>
+        <button class="button-question btn" value=3 name="group1">Never</button>
         <audio src="assets/clip5.mp3" type="audio/mp3"></audio>
       </fieldset>
 
-      <fieldset id="group5" class="question invisible">
-        <p>I find it difficult to incorporate new ideas with my existing world view.</p>
-        <button class="button-question" value=1 name="group1">Always</button>
-        <button class="button-question" value=2 name="group1">Sometimes</button>
-        <button class="button-question" value=3 name="group1">Never</button>
+      <fieldset id="group5" class="centered question invisible">
+        <p class="mb-2 question-text">I find it difficult to incorporate new ideas with my existing world view.</p>
+        <button class="button-question btn" value=1 name="group1">Always</button>
+        <button class="button-question btn" value=2 name="group1">Sometimes</button>
+        <button class="button-question btn" value=3 name="group1">Never</button>
         <audio src="assets/clip6.mp3" type="audio/mp3"></audio>
       </fieldset>
   </form>
-  <button class="invisible btn" id="submit-quiz">Start Working</button>
+  <div class="centered">
+    <button class="invisible btn start-working" id="submit-quiz">Start Working</button>
+  </div>
 `
   return test
 }

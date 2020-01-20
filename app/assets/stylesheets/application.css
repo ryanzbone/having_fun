@@ -14,6 +14,10 @@
  *= require_self
  */
 
+body {
+  font-family: arvo;
+}
+
 .full-frame {
   position: relative;
   height: 100%;
@@ -32,11 +36,61 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-family: arvo;
   -webkit-transition-duration: 0.2s; /* Safari */
   transition-duration: 0.2s;
+  font-size: 1.5em;
 }
 .btn:hover {
   background-color: #8e3d0b; /* Green */
   color: white;
+}
+
+.centered {
+  text-align: center;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+h2 {
+  font-size: 3em;
+}
+
+.work-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 4em;
+  margin-top: 0;
+}
+
+.play-title {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 2.07em;
+  margin-bottom: 0;
+}
+.title-text {
+  width: 50%;
+  margin: auto;
+  font-size: 1.2em;
+  line-height: 1.4;
+
+}
+.quiz-font {
+  font-family: 'Arvo', serif;
+}
+.question-text {
+  font-size: 2.5em;
+  margin-top: 6em;
+}
+.mb-2 {
+  margin-bottom: 2em;
+}
+fieldset {
+  border: none
+}
+.start-working {
+  padding: 1.5em;
+  margin-top: 3em;
+  font-size: 4em;
 }
