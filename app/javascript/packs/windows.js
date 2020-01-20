@@ -3,7 +3,7 @@ const wm = new WM({
   borderRadius: '10px'
 })
 
-export function appIcon(idName, appWindow, x, y)
+export function appIcon(idName, appWindow, x, y, icon)
 {
   const test = wm.createWindow({
     minWidth: 100,
@@ -19,6 +19,8 @@ export function appIcon(idName, appWindow, x, y)
     closable: false,
     movable: false
   })
+  test.content.style.backgroundSize = 'contain';
+  test.content.style.backgroundImage = `url('../../assets/${icon}')`;
   test.on('focus', function(event) {
     if(appWindow.closed) {
       appWindow.open();
@@ -29,6 +31,7 @@ export function appIcon(idName, appWindow, x, y)
   });
   return test
 }
+
 
 export function work()
 {
@@ -44,7 +47,7 @@ export function work()
   return test
 }
 
-export function play()
+export function play(channel)
 {
   const test = wm.createWindow({
     x: 550,
@@ -57,10 +60,22 @@ export function play()
     maximizable: false,
     minimizable: true,
     titleCenter: true,
+    minimizeSize: 200,
   })
   test.content.style.padding = '0.5em'
   test.content.style.backgroundColor = 'black'
-  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://player.twitch.tv/?channel=shinybreeder"></iframe>'
+  test.content.innerHTML='<div id="twitch-embed" class="full-frame"></div>'
+
+  test.on('open', function(event) {
+    var embed = new Twitch.Embed("twitch-embed", {
+      channel: channel,
+      layout: "video",
+    });
+    var iframe = document.getElementById('twitch-embed').querySelector('iframe');
+    iframe.removeAttribute('width');
+    iframe.removeAttribute('height');
+    iframe.classList.add('full-frame');
+  });
   test.on('close', function(event) {
     test.open();
   });
@@ -68,14 +83,14 @@ export function play()
 }
 
 export function moveWindow(toMove, targetWindow, moveSpeed) {
+  console.log("moving")
   var timer = 0;
   var duration = 200
-  var id = setInterval(frame, 10);
+  var intervalId = setInterval(frame, 10);
+  var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 
-  var targetX = targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2);
-  var targetY = targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2);
-  var targetWidth = (Math.random() + 0.0)  * targetWindow.width;
-  var targetHeight= toMove.width / 1.6;
+  var targetX = (targetWindow.x + (Math.random() * targetWindow.width) - (toMove.width/2));
+  var targetY = (targetWindow.y + (Math.random() * targetWindow.height) - (toMove.height/2));
 
   function direction(moverPoint, targetPoint, distance) {
     if(moverPoint < targetPoint) {
@@ -90,7 +105,7 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
     var closeToY = closeTo(toMove.y, targetY, 20);
 
     if (timer >= duration || closeToX || closeToY) {
-      clearInterval(id);
+      clearInterval(intervalId);
     } else {
       timer++;
       toMove.focus();
@@ -98,20 +113,39 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
         toMove.x + direction(toMove.x, targetX, moveSpeed),
         toMove.y + direction(toMove.y, targetY, moveSpeed),
       );
-      if(toMove.width <= targetWidth) {
-        toMove.width = toMove.width + 1;
-      } else {
-        toMove.width = toMove.width - 1;
-      }
-      if(toMove.height <= targetHeight) {
-        toMove.height = toMove.height + 1;
-      } else {
-        toMove.height = toMove.height - 1;
+    }
+  }
+}
+
+export function resizeWindow(target, scaleRate) {
+  console.log("resizing")
+  var timer = 0;
+  var duration = 200;
+  var maxWidth = 1200;
+  var minWidth = 400;
+  var minHeight = 300;
+  var scaleRatio = 1.77;
+
+  var newWidth = minWidth + (Math.random() * maxWidth);
+
+  var intervalId = setInterval(frame, 10);
+
+  function frame() {
+    if (timer >= duration || closeTo(target.width, newWidth, scaleRate + 1)) {
+      clearInterval(intervalId);
+    } else {
+      timer++;
+      if(target.width <= newWidth) {
+        target.width = target.width + scaleRate;
+        target.height = target.height + (scaleRate/scaleRatio);
+      } else if(target.width > newWidth) {
+        target.width = target.width - scaleRate;
+        target.height = target.height - (scaleRate/scaleRatio);
       }
     }
   }
+}
 
-  function closeTo(actual, target, error) {
-    return (target - error) <= actual && actual <= (target + error);
-  }
+function closeTo(actual, target, error) {
+  return Math.abs(actual - target) <= error;
 }
