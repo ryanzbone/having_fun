@@ -41,7 +41,7 @@ export function work(wm)
   return test
 }
 
-export function play(channel, wm)
+export function play(video, wm)
 {
   const test = wm.createWindow({
     x: 550,
@@ -62,7 +62,7 @@ export function play(channel, wm)
 
   test.on('open', function(event) {
     var embed = new Twitch.Embed("twitch-embed", {
-      channel: channel,
+      video: video,
       layout: "video",
     });
     var iframe = document.getElementById('twitch-embed').querySelector('iframe');
