@@ -16,6 +16,7 @@ export function appIcon(idName, appWindow, x, y, icon, wm)
   })
   test.content.style.backgroundSize = 'contain';
   test.content.style.backgroundImage = `url(${icon})`;
+  test.win.classList.add('app-icon');
   test.on('focus', function(event) {
     if(appWindow.closed) {
       appWindow.open();
@@ -33,14 +34,166 @@ export function work(wm)
     width: 1200,
     height: 800,
     x: 100, y: 100,
-    title: "I'm Still Working",
+    title: "Allvuu",
     maximizable: false,
   })
   test.content.style.padding = '0.5em'
   test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://instantwild.zsl.org/task/159037"></iframe>'
   return test
 }
+export function chat(wm)
+{
+  const test = wm.createWindow({
+    width: 300,
+    height: 600,
+    x: 800, y: 15,
+    title: "Crosstalk",
+    maximizable: false,
+  })
+  test.content.style.padding = '0.5em'
+  test.content.classList.add('chat-box-margin')
+  test.content.innerHTML = `
+  <div id="chat-log">
+    <p>Wiz: Ahoy</p>
+  </div>
+  <div id="chat-controls" class="footer">
+    <div class="input-group">
+      <input type="text" id="crosstalk-message" class="form-control" placeholder="Message #Crosstalk">
+      <div class="input-group-append">
+        <button id="send-message" class="btn btn-outline-secondary" type="button">+</button>
+      </div>
+    </div>
+  </div>
+ `
+  chat = [
+    'Dave: Hey bud',
+    'Dave: We need a photo of you for your ID',
+    'Dave: If you want to just add me on Facebook real quick I can pick one for you.',
+    'Dave: Ill choose one where you looks good ;P',
+  ]
 
+  test.on('open', function(event) {
+    var messageLog = document.getElementById("chat-log");
+
+    chat.forEach(function(element, index) {
+      setTimeout(function() {
+        var newChat = document.createElement('p');
+        newChat.innerText = element;
+        messageLog.appendChild(newChat);
+      }, index * 1000);
+    });
+  });
+
+
+  document.addEventListener('click', function(event) {
+    if(event.target.id == "send-message") {
+      var messageLog = document.getElementById("chat-log");
+      var messageInput = document.getElementById("crosstalk-message");
+      var newChat = document.createElement('p');
+      newChat.classList.add('chat-me')
+      newChat.innerText = messageInput.value;
+      messageLog.appendChild(newChat);
+      messageInput.value = '';
+    }
+  });
+  return test
+}
+
+export function textEditor(wm)
+{
+  const test = wm.createWindow({
+    width: 300,
+    height: 400,
+    x: 400, y: 200,
+    title: "Tea",
+  })
+  var textarea = document.createElement
+  test.content.innerHTML = `
+<textarea id="editor" autofocus="true">
+To do:
+- Far cry 2
+- Baboo
+- The wizaaaarrrd
+</textarea>
+  `
+
+  test.on('open', function(event) {
+    setTimeout(function() {
+      var el = document.getElementById('editor');
+      el.selectionStart = el.selectionEnd = el.value.length;
+      el.focus()
+    }, 300);
+  });
+  return test
+}
+
+export function dumpster(wm)
+{
+  const test = wm.createWindow({
+    width: 400,
+    height: 300,
+    x: 300, y: 500,
+    title: "Dempster",
+  })
+  var textarea = document.createElement
+  test.content.innerHTML = `
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Size</th>
+      <th scope="col">Kind</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Video games</td>
+      <td>143kb</td>
+      <td>Executable</td>
+    </tr>
+    <tr>
+      <td>Big Bird</td>
+      <td>800gb</td>
+      <td>PNG</td>
+    </tr>
+    <tr>
+      <td>Famous</td>
+      <td>4.2mb</td>
+      <td>MP3</td>
+    </tr>
+    <tr>
+      <td>Boost</td>
+      <td>3.3mb</td>
+      <td>PDF</td>
+    </tr>
+    <tr>
+      <td>Hot Scoops</td>
+      <td>66kb</td>
+      <td>Text</td>
+    </tr>
+    <tr>
+      <td>Junior Mints</td>
+      <td>473kb</td>
+      <td>PDF</td>
+    </tr>
+    <tr>
+      <td>Fuck</td>
+      <td>32mb</td>
+      <td>mkv</td>
+    </tr>
+  </tbody>
+</table>
+  `
+
+  test.on('open', function(event) {
+    setTimeout(function() {
+      var el = document.getElementById('editor');
+      el.selectionStart = el.selectionEnd = el.value.length;
+      el.focus()
+    }, 300);
+  });
+  return test
+}
 export function play(video, wm)
 {
   const test = wm.createWindow({
@@ -69,15 +222,23 @@ export function play(video, wm)
     iframe.removeAttribute('width');
     iframe.removeAttribute('height');
     iframe.classList.add('full-frame');
+    embed.addEventListener('gameOver', function() {
+      console.log('game over event recieved by twitch object');
+      embed.pause();
+    });
+  });
+  document.addEventListener('gameOver', function(event) {
+    console.log('game over event recieved by play window');
+    test.removeAllListeners();
+    test.close();
   });
   test.on('close', function(event) {
     test.open();
   });
-  return test
+  return test;
 }
 
 export function moveWindow(toMove, targetWindow, moveSpeed) {
-  console.log("moving")
   var timer = 0;
   var duration = 200
   var intervalId = setInterval(frame, 10);
@@ -112,7 +273,6 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
 }
 
 export function resizeWindow(target, scaleRate) {
-  console.log("resizing")
   var timer = 0;
   var duration = 200;
   var maxWidth = 1200;

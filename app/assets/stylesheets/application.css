@@ -94,3 +94,19 @@ fieldset {
   margin-top: 3em;
   font-size: 4em;
 }
+textarea {
+  width: 100%;
+  height: 99%;
+  border: none;
+  resize: none;
+  font-size: 16pt;
+}
+.chat-me { text-align: right; }
+.chat-box-margin { margin-bottom: 60px; }
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

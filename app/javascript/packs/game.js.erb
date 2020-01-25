@@ -2,6 +2,9 @@
 import {
   work,
   play,
+  chat,
+  dumpster,
+  textEditor,
   moveWindow,
   resizeWindow,
   appIcon,
@@ -12,6 +15,10 @@ import {
   quiz,
   runQuiz,
 } from './intro.js'
+
+import {
+  gameOver
+} from './game_over.js'
 
 var WM = require('simple-window-manager');
 const wm = new WM({
@@ -31,45 +38,61 @@ var videos = [
 
 window.onload = () =>
 {
-  titleScreenWindow.open();
-  document.getElementById('start-game').addEventListener('click', function(event) {
-    event.preventDefault();
-    titleScreenWindow.close();
-    var audio = document.getElementById('audio-introduction');
-    audio.addEventListener('ended', function() {
-      quizWindow.open();
-    });
-    audio.play()
-  });
-  document.addEventListener('calculateScore', function(event) {
-    score = event.detail;
-  });
+// titleScreenWindow.open();
+// document.getElementById('start-game').addEventListener('click', function(event) {
+//   event.preventDefault();
+//   titleScreenWindow.close();
+//   var audio = document.getElementById('audio-introduction');
+//   audio.addEventListener('ended', function() {
+//     quizWindow.open();
+//   });
+//   audio.play()
+// });
+// document.addEventListener('calculateScore', function(event) {
+//   score = event.detail;
+// });
+//
+// runQuiz();
+//
+// // run game loop
+// document.getElementById('submit-quiz').addEventListener('click', function(event) {
+//   event.preventDefault();
+//   quizWindow.close();
+   desktop(score);
+//   startGameTimer(wm);
+// });
+}
 
-  runQuiz();
+function startGameTimer(wm) {
+  window.setTimeout(function() {
+    console.log('sending game over event');
+    var event = new Event('gameOver');
+    document.dispatchEvent(event);
+  }, 500000);
 
-  document.getElementById('submit-quiz').addEventListener('click', function(event) {
-    event.preventDefault();
-    quizWindow.close();
-    desktop(score);
+  document.addEventListener('gameOver', function() {
+    console.log('game over event recieved by document');
+    gameOver(wm);
   });
-  //desktop(1);
 }
 
 function desktop(score) {
   var workWindow = work(wm);
   var video = scoreToVideo(score);
   var playWindow = play(video, wm);
+
   appIcon('work', workWindow, 20, 20, '<%= image_path('work.png') %>', wm).open({ noFocus: true });
   appIcon('play', playWindow, 140, 20, '<%= image_path('') %>', wm).open({ noFocus: true });
-  appIcon('text', null, 260, 20, '<%= image_path('text.png') %>', wm).open({ noFocus: true });
-  appIcon('trash', null, 380, 20, '<%= image_path('trash.png') %>', wm).open({ noFocus: true });
-  appIcon('chat', null, 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
-
+  appIcon('text', textEditor(wm), 260, 20, '<%= image_path('text.png') %>', wm).open({ noFocus: true });
+  appIcon('trash', dumpster(wm), 380, 20, '<%= image_path('trash.png') %>', wm).open({ noFocus: true });
+  appIcon('chat', chat(wm), 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
 
   playWindow.on('open', function() {
+    // Always keep play window on top
     setInterval(function() {
       playWindow.sendToFront();
     }, 100);
+
     // Set move window interval
     window.setInterval(function() {
       var timeUntilMove = Math.random() * movementInterval;
