@@ -33,13 +33,14 @@ wm.overlay.innerHTML = `
   <audio id="bloop" src="<%= audio_path('bloop.mp3') %>" type="audio/mp3"></audio>
 `
 
-var score = 12;
+var score = 0;
 var quizWindow = quiz(wm);
 var titleScreenWindow = titleScreen(wm);
 var movementInterval = 8000;
 var resizeInterval = 5000;
 var gameDuration = 600000;
 var playWindowOpensAt = 20000;
+var bsodTimer = 5000;
 var videos = [
   'v538817827',
   'v538881620',
@@ -74,6 +75,7 @@ window.onload = () =>
     event.preventDefault();
     quizWindow.close();
     desktop(score);
+    // startBSODTimer();
     startGameTimer(wm);
   });
 }
@@ -148,4 +150,18 @@ function desktop(score) {
       return 2;
     }
   }
+}
+
+function startBSODTimer() {
+  setTimeout(function() {
+    var bsod = document.createElement('div');
+    bsod.classList.add('bsod')
+    bsod.innerHTML = `
+    <p>A problem has been detected and allvuu has been shut down to prevent damage to your computer.</p>
+    <p>The problem seems to have been caused by the following file: GRENADE_HILL.BAT
+    <p>UNINTENDED_CONSEQUENCES</p>
+    <p>If this is the first time you've seen this stop error screen, press space to continue.</p>
+    `
+    document.querySelector('.bsod-point').appendChild(bsod);
+  },bsodTimer);
 }
