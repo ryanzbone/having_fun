@@ -36,8 +36,8 @@ wm.overlay.innerHTML = `
 var score = 0;
 var quizWindow = quiz(wm);
 var titleScreenWindow = titleScreen(wm);
-var movementInterval = 8000;
-var resizeInterval = 5000;
+var movementInterval = 19000;
+var resizeInterval = 10000;
 var gameDuration = 600000;
 var playWindowOpensAt = 20000;
 var bsodTimer = 5000;
@@ -112,7 +112,7 @@ function desktop(score) {
   var chatIcon = appIcon('chat', wizardChat(wm), 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
   scheduleChats(wm, chatIcon);
 
-  workWindow.open();
+  // workWindow.open();
   setTimeout(function() { playWindow.open() }, playWindowOpensAt);
   playWindow.on('open', function() {
     // Always keep play window on top

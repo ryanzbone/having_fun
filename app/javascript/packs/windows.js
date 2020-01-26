@@ -221,7 +221,7 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
 export function resizeWindow(target, scaleRate) {
   var timer = 0;
   var duration = 200;
-  var maxWidth = 1200;
+  var maxWidth = 800;
   var minWidth = 400;
   var minHeight = 300;
   var scaleRatio = 1.77;
