@@ -110,6 +110,7 @@ function desktop(score) {
   var chatIcon = appIcon('chat', wizardChat(wm), 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
   scheduleChats(wm, chatIcon);
 
+  workWindow.open();
   setTimeout(function() { playWindow.open() }, playWindowOpensAt);
   playWindow.on('open', function() {
     // Always keep play window on top

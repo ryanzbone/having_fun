@@ -109,8 +109,10 @@ export function scheduleChats(wm)
     }, timeBetweenChats);
   });
 
-  var event = new Event('chatOver');
-  document.dispatchEvent(event);
+  setTimeout(function() {
+    var event = new Event('chatOver');
+    document.dispatchEvent(event);
+  }, 80000);
 }
 
 function chatWindow(wm, character, chats) {

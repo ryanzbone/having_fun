@@ -32,7 +32,7 @@ export function appIcon(idName, appWindow, x, y, icon, wm)
 export function work(wm)
 {
   const test = wm.createWindow({
-    width: 1020,
+    width: 1100,
     height: 700,
     x: 100, y: 100,
     title: "Allvuu",
