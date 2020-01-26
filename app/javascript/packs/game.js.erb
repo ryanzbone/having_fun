@@ -39,6 +39,7 @@ var titleScreenWindow = titleScreen(wm);
 var movementInterval = 8000;
 var resizeInterval = 5000;
 var gameDuration = 600000;
+var playWindowOpensAt = 30000;
 var videos = [
   'v538817827',
   'v538881620',
@@ -109,6 +110,7 @@ function desktop(score) {
   var chatIcon = appIcon('chat', wizardChat(wm), 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
   scheduleChats(wm, chatIcon);
 
+  setTimeout(function() { playWindow.open() }, playWindowOpensAt);
   playWindow.on('open', function() {
     // Always keep play window on top
     setInterval(function() {
