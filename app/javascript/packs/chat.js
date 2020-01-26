@@ -100,12 +100,13 @@ export function scheduleChats(wm)
     { name: 'Dave 😿', messages: daveChat5 },
   ]
   var chatIndex = 0;
+  var timeBetweenChats = 45000;
 
   document.addEventListener('chatOver', function(event) {
     setTimeout(function() {
       chatWindow(wm, allChats[chatIndex].name, allChats[chatIndex].messages).open();
       chatIndex = chatIndex + 1;
-    }, 15000);
+    }, timeBetweenChats);
   });
 
   var event = new Event('chatOver');
