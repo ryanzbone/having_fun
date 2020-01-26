@@ -113,7 +113,11 @@ function desktop(score) {
   scheduleChats(wm, chatIcon);
 
   // workWindow.open();
-  setTimeout(function() { playWindow.open() }, playWindowOpensAt);
+  setTimeout(function() {
+    if(playWindow.closed) {
+      playWindow.open();
+    }
+  }, playWindowOpensAt);
   playWindow.on('open', function() {
     // Always keep play window on top
 //    setInterval(function() {

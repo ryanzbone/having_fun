@@ -158,7 +158,7 @@ export function play(video, wm)
   test.content.style.backgroundColor = 'black'
   test.content.innerHTML='<div id="twitch-embed" class="full-frame"></div>'
 
-  test.on('open', function(event) {
+  test.once('open', function(event) {
     var embed = new Twitch.Embed("twitch-embed", {
       video: video,
       layout: "video",
