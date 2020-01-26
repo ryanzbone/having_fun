@@ -16,6 +16,7 @@
 
 body {
   font-family: arvo !important;
+  overflow: hidden !important;;
 }
 
 .full-frame {
