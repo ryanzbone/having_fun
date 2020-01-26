@@ -112,7 +112,7 @@ export function scheduleChats(wm)
   setTimeout(function() {
     var event = new Event('chatOver');
     document.dispatchEvent(event);
-  }, 80000);
+  }, 40000);
 }
 
 function chatWindow(wm, character, chats) {
