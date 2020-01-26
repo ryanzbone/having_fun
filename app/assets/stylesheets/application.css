@@ -15,7 +15,7 @@
  */
 
 body {
-  font-family: arvo;
+  font-family: arvo !important;
 }
 
 .full-frame {
@@ -28,7 +28,7 @@ body {
   display: none !important;
 }
 
-.btn {
+.sbtn {
   background-color: #f0803a; /* Orangey */
   border: none;
   color: white;
@@ -41,7 +41,7 @@ body {
   transition-duration: 0.2s;
   font-size: 1.5em;
 }
-.btn:hover {
+.sbtn:hover {
   background-color: #8e3d0b; /* Green */
   color: white;
 }
@@ -74,7 +74,7 @@ h2 {
   margin: auto;
   font-size: 1.2em;
   line-height: 1.4;
-
+  margin-top: 30px;
 }
 .quiz-font {
   font-family: 'Arvo', serif;
@@ -105,8 +105,12 @@ textarea {
 .chat-box-margin { margin-bottom: 60px; }
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
+
+.mt-9000 {
+  margin-top: 150px;
+},w

@@ -17,6 +17,7 @@ export function appIcon(idName, appWindow, x, y, icon, wm)
   test.content.style.backgroundSize = 'contain';
   test.content.style.backgroundImage = `url(${icon})`;
   test.win.classList.add('app-icon');
+  test.win.id = idName;
   test.on('focus', function(event) {
     if(appWindow.closed) {
       appWindow.open();
@@ -39,63 +40,6 @@ export function work(wm)
   })
   test.content.style.padding = '0.5em'
   test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://instantwild.zsl.org/task/159037"></iframe>'
-  return test
-}
-export function chat(wm)
-{
-  const test = wm.createWindow({
-    width: 300,
-    height: 600,
-    x: 800, y: 15,
-    title: "Crosstalk",
-    maximizable: false,
-  })
-  test.content.style.padding = '0.5em'
-  test.content.classList.add('chat-box-margin')
-  test.content.innerHTML = `
-  <div id="chat-log">
-    <p>Wiz: Ahoy</p>
-  </div>
-  <div id="chat-controls" class="footer">
-    <div class="input-group">
-      <input type="text" id="crosstalk-message" class="form-control" placeholder="Message #Crosstalk">
-      <div class="input-group-append">
-        <button id="send-message" class="btn btn-outline-secondary" type="button">+</button>
-      </div>
-    </div>
-  </div>
- `
-  chat = [
-    'Dave: Hey bud',
-    'Dave: We need a photo of you for your ID',
-    'Dave: If you want to just add me on Facebook real quick I can pick one for you.',
-    'Dave: Ill choose one where you looks good ;P',
-  ]
-
-  test.on('open', function(event) {
-    var messageLog = document.getElementById("chat-log");
-
-    chat.forEach(function(element, index) {
-      setTimeout(function() {
-        var newChat = document.createElement('p');
-        newChat.innerText = element;
-        messageLog.appendChild(newChat);
-      }, index * 1000);
-    });
-  });
-
-
-  document.addEventListener('click', function(event) {
-    if(event.target.id == "send-message") {
-      var messageLog = document.getElementById("chat-log");
-      var messageInput = document.getElementById("crosstalk-message");
-      var newChat = document.createElement('p');
-      newChat.classList.add('chat-me')
-      newChat.innerText = messageInput.value;
-      messageLog.appendChild(newChat);
-      messageInput.value = '';
-    }
-  });
   return test
 }
 
@@ -147,7 +91,7 @@ export function dumpster(wm)
   </thead>
   <tbody>
     <tr>
-      <td>Video games</td>
+      <td>Video Games</td>
       <td>143kb</td>
       <td>Executable</td>
     </tr>

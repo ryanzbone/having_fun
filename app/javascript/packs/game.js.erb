@@ -2,13 +2,14 @@
 import {
   work,
   play,
-  chat,
   dumpster,
   textEditor,
   moveWindow,
   resizeWindow,
   appIcon,
 } from './windows.js';
+
+import { scheduleChats, wizardChat } from './chat.js'
 
 import {
   titleScreen,
@@ -25,11 +26,19 @@ const wm = new WM({
   borderRadius: '10px'
 })
 
+wm.overlay.innerHTML = `
+  <audio class="os-start" src="<%= audio_path('mac.mp3') %>" type="audio/mp3"></audio>
+  <audio class="os-start" src="<%= audio_path('windowsme.mp3') %>" type="audio/mp3"></audio>
+  <audio class="os-start" src="<%= audio_path('windows31.mp3') %>" type="audio/mp3"></audio>
+  <audio id="bloop" src="<%= audio_path('bloop.mp3') %>" type="audio/mp3"></audio>
+`
+
 var score = 12;
 var quizWindow = quiz(wm);
 var titleScreenWindow = titleScreen(wm);
-var movementInterval = 4000;
-var resizeInterval = 2000;
+var movementInterval = 8000;
+var resizeInterval = 5000;
+var gameDuration = 300000;
 var videos = [
   'v538817827',
   'v538881620',
@@ -43,29 +52,29 @@ var wallpapers = [
 
 window.onload = () =>
 {
-// titleScreenWindow.open();
-// document.getElementById('start-game').addEventListener('click', function(event) {
-//   event.preventDefault();
-//   titleScreenWindow.close();
-//   var audio = document.getElementById('audio-introduction');
-//   audio.addEventListener('ended', function() {
-//     quizWindow.open();
-//   });
-//   audio.play()
-// });
-// document.addEventListener('calculateScore', function(event) {
-//   score = event.detail;
-// });
-//
-// runQuiz();
-//
-// // run game loop
-// document.getElementById('submit-quiz').addEventListener('click', function(event) {
-//   event.preventDefault();
-//   quizWindow.close();
-   desktop(score);
-//   startGameTimer(wm);
-// });
+  titleScreenWindow.open();
+  document.getElementById('start-game').addEventListener('click', function(event) {
+    event.preventDefault();
+    titleScreenWindow.close();
+    var audio = document.getElementById('audio-introduction');
+    audio.addEventListener('ended', function() {
+      quizWindow.open();
+    });
+    audio.play()
+  });
+  document.addEventListener('calculateScore', function(event) {
+    score = event.detail;
+  });
+
+  runQuiz();
+
+  // run game loop
+  document.getElementById('submit-quiz').addEventListener('click', function(event) {
+    event.preventDefault();
+    quizWindow.close();
+    desktop(score);
+    startGameTimer(wm);
+  });
 }
 
 function startGameTimer(wm) {
@@ -73,7 +82,7 @@ function startGameTimer(wm) {
     console.log('sending game over event');
     var event = new Event('gameOver');
     document.dispatchEvent(event);
-  }, 500000);
+  }, gameDuration);
 
   document.addEventListener('gameOver', function() {
     console.log('game over event recieved by document');
@@ -83,17 +92,22 @@ function startGameTimer(wm) {
 
 function desktop(score) {
   var workWindow = work(wm);
-  var video = scoreToAttribute(score, videos);
-  var bg = scoreToAttribute(score, wallpapers)
+  var scoreIndex = scoreToIndex(score);
+  var video = videos[scoreIndex];
+  var bg = wallpapers[scoreIndex];
   var playWindow = play(video, wm);
 
   wm.overlay.style.backgroundImage = `url(${bg})`;
   wm.overlay.style.backgroundSize = `cover`;
+
+  document.querySelectorAll('audio.os-start')[scoreIndex].play()
+
   appIcon('work', workWindow, 20, 20, '<%= image_path('work.png') %>', wm).open({ noFocus: true });
   appIcon('play', playWindow, 140, 20, '<%= image_path('twitch.png') %>', wm).open({ noFocus: true });
   appIcon('text', textEditor(wm), 260, 20, '<%= image_path('text.png') %>', wm).open({ noFocus: true });
   appIcon('trash', dumpster(wm), 380, 20, '<%= image_path('trash.png') %>', wm).open({ noFocus: true });
-  appIcon('chat', chat(wm), 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
+  var chatIcon = appIcon('chat', wizardChat(wm), 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
+  scheduleChats(wm, chatIcon);
 
   playWindow.on('open', function() {
     // Always keep play window on top
@@ -122,13 +136,13 @@ function desktop(score) {
     }, resizeInterval);
   });
 
-  function scoreToAttribute(score, arr) {
+  function scoreToIndex(score) {
     if(score <= 8.33) {
-      return arr[0];
+      return 0;
     } else if (score <= 11.66) {
-      return arr[1];
+      return 1;
     } else {
-      return arr[2];
+      return 2;
     }
   }
 }
