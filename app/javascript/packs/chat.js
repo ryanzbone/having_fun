@@ -116,7 +116,7 @@ function chatWindow(wm, character, chats) {
   const test = wm.createWindow({
     width: 300,
     height: 600,
-    x: (Math.random() * 1000), y:Math.random() * 300,
+    x: (Math.random() * 1000), y:Math.random() * 100,
     title: `${character} via Crosstalk`,
     maximizable: false,
   })
