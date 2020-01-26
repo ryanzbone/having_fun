@@ -120,6 +120,7 @@ function chatWindow(wm, character, chats) {
     title: `${character} via Crosstalk`,
     maximizable: false,
   })
+  var randomId = Math.random().toString(36).substring(2).replace(/\d/g, '')
   test.content.style.padding = '0.5em'
   test.content.classList.add('chat-box-margin')
   test.content.innerHTML = `
@@ -127,13 +128,25 @@ function chatWindow(wm, character, chats) {
   </div>
   <div class="chat-controls footer">
     <div class="input-group">
-      <input type="text" class="crosstalk-message form-control" placeholder="Message #Crosstalk">
+      <input type="text" class="crosstalk-message ${randomId} form-control" placeholder="Message #Crosstalk">
       <div class="input-group-append">
-        <button class="send-message" class="btn btn-outline-secondary" type="button">+</button>
+        <button class="send-message ${randomId}">+</button>
       </div>
     </div>
   </div>
  `
+  var input = document.querySelector(`input.${randomId}`);
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.querySelector(`button.${randomId}`).click();
+    }
+  });
+
   test.on('open', function(event) {
     var messageLog = test.win.querySelector("div.chat-log");
     var bloop = document.getElementById('bloop');
@@ -186,9 +199,9 @@ export function wizardChat(wm) {
   </div>
   <div class="chat-controls footer">
     <div class="input-group">
-      <input type="text" class="crosstalk-message form-control" placeholder="Message #Crosstalk">
+      <input type="text" class="wizard crosstalk-message form-control" placeholder="Message #Crosstalk">
       <div class="input-group-append">
-        <button class="send-message-to-wizard" class="btn btn-outline-secondary" type="button">+</button>
+        <button class="send-message-to-wizard">+</button>
       </div>
     </div>
   </div>
@@ -209,6 +222,17 @@ export function wizardChat(wm) {
     "🐰"
   ]
 
+  var input = document.querySelector('input.wizard');
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.querySelector("button.send-message-to-wizard").click();
+    }
+  });
   document.addEventListener('click', function(event) {
     if(event.target.classList.contains("send-message-to-wizard")) {
       var messageLog = test.win.querySelector("div.chat-log");
