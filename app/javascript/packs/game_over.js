@@ -14,7 +14,7 @@ export function gameOver(wm)
   <div class="centered">
   <h1>Time's up!</h1>
   <p class="mb-2">How was your first day? You spent it identifying animals? What? Who told you to do that?</p>
-  <button class="btn" onclick="window.location.reload()">Play Again</button>
+  <button class="sbtn" onclick="window.location.reload()">Play Again</button>
   </div>
   `
   wm.closeAll();
