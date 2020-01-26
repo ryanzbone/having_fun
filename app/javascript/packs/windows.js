@@ -32,11 +32,12 @@ export function appIcon(idName, appWindow, x, y, icon, wm)
 export function work(wm)
 {
   const test = wm.createWindow({
-    width: 1200,
-    height: 800,
+    width: 1020,
+    height: 700,
     x: 100, y: 100,
     title: "Allvuu",
     maximizable: false,
+    resizable: false,
   })
   test.content.style.padding = '0.5em'
   test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://instantwild.zsl.org/task/159037"></iframe>'
