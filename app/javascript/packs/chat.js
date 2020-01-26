@@ -165,7 +165,7 @@ function chatWindow(wm, character, chats) {
         messageLog.appendChild(newChat);
         bloop.play();
         newChat.scrollIntoView();
-        setTimeout(function() { sendMessage(index + 1) }, 1000 + (6000 * Math.random()));
+        setTimeout(function() { sendMessage(index + 1) }, 3000 + (6000 * Math.random()));
       }
     }
     sendMessage(0)
