@@ -182,10 +182,9 @@ export function wizardChat(wm) {
   test.content.classList.add('chat-box-margin')
   test.content.innerHTML = `
   <div class="chat-log">
-    <p>Allvuu Wizard 🔮: Hello, I'm the Allvuu Wizard. I try to be helpful. (But I'm still just a shitty wizard. Sorry!) Type something and click the "+" to send your message.
+    <p>Hello, I'm the Allvuu Wizard. I try to be helpful. (But I'm still just a shitty wizard. Sorry!) Type something and click the "+" to send your message.
   </div>
   <div class="chat-controls footer">
-    <p>Wizard 🔮 is typing</p>
     <div class="input-group">
       <input type="text" class="crosstalk-message form-control" placeholder="Message #Crosstalk">
       <div class="input-group-append">
