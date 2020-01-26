@@ -115,7 +115,7 @@ export function scheduleChats(wm)
 function chatWindow(wm, character, chats) {
   const test = wm.createWindow({
     width: 300,
-    height: 600,
+    height: 500,
     x: (Math.random() * 1000), y:Math.random() * 100,
     title: `${character} via Crosstalk`,
     maximizable: false,
