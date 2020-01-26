@@ -206,9 +206,10 @@ export function moveWindow(toMove, targetWindow, moveSpeed) {
 
     if (timer >= duration || closeToX || closeToY) {
       clearInterval(intervalId);
+      toMove.focus();
     } else {
       timer++;
-      toMove.focus();
+      //toMove.focus();
       toMove.move(
         toMove.x + direction(toMove.x, targetX, moveSpeed),
         toMove.y + direction(toMove.y, targetY, moveSpeed),
@@ -232,6 +233,7 @@ export function resizeWindow(target, scaleRate) {
   function frame() {
     if (timer >= duration || closeTo(target.width, newWidth, scaleRate + 1)) {
       clearInterval(intervalId);
+      target.focus();
     } else {
       timer++;
       if(target.width <= newWidth) {
