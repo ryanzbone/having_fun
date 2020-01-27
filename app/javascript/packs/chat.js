@@ -126,6 +126,11 @@ function chatWindow(wm, character, chats) {
     x: (Math.random() * 1000), y:Math.random() * 100,
     title: `${character} via Crosstalk`,
     maximizable: false,
+    backgroundColorWindow: '#ffffff',
+    titlebarHeight: '45px',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
   })
   var randomId = Math.random().toString(36).substring(2).replace(/\d/g, '')
   test.content.style.padding = '0.5em'
@@ -134,7 +139,7 @@ function chatWindow(wm, character, chats) {
   <div class="chat-log">
   </div>
   <div class="chat-controls footer">
-    <div class="input-group">
+    <div class="input-group padding-5-lr">
       <input type="text" class="crosstalk-message ${randomId} form-control" placeholder="Message #Crosstalk">
       <div class="input-group-append">
         <button class="send-message ${randomId}">+</button>
@@ -180,8 +185,15 @@ function chatWindow(wm, character, chats) {
       var messageLog = test.win.querySelector("div.chat-log");
       var messageInput = test.win.querySelector("input.crosstalk-message");
       var newChat = document.createElement('p');
+      var newChat = document.createElement('p');
       newChat.classList.add('chat-me')
-      newChat.innerText = messageInput.value;
+      newChat.innerHTML = `
+      <br/>
+      <b>You 👻</b><i> a moment ago</i>
+      <br/>
+      ${messageInput.value}
+      </p>
+      `
       messageLog.appendChild(newChat);
       newChat.scrollIntoView();
       messageInput.value = '';
@@ -197,15 +209,21 @@ export function wizardChat(wm) {
     x: 800, y: 15,
     title: `Wizard 🔮 via Crosstalk`,
     maximizable: false,
+    backgroundColorWindow: '#ffffff',
+    titlebarHeight: '45px',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
   })
   test.content.style.padding = '0.5em'
   test.content.classList.add('chat-box-margin')
   test.content.innerHTML = `
   <div class="chat-log">
-    <p>Hello, I'm the Allvuu Wizard. I try to be helpful. (But I'm still just a shitty wizard. Sorry!) Type something and click the "+" to send your message.
+    <p><b>Wizard</b> 🔮 <i>a moment ago</i></p>
+    <p>Hello, I'm the Wizard. I try to be helpful. (But I'm still just a shitty wizard. Sorry!) Type something and click the "+" to send your message.
   </div>
   <div class="chat-controls footer">
-    <div class="input-group">
+    <div class="input-group padding-5-lr">
       <input type="text" class="wizard crosstalk-message form-control" placeholder="Message #Crosstalk">
       <div class="input-group-append">
         <button class="send-message-to-wizard">+</button>
@@ -245,9 +263,14 @@ export function wizardChat(wm) {
       var messageLog = test.win.querySelector("div.chat-log");
       var messageInput = test.win.querySelector("input.crosstalk-message");
       var newChat = document.createElement('p');
-
       newChat.classList.add('chat-me')
-      newChat.innerText = messageInput.value;
+      newChat.innerHTML = `
+      <br/>
+      <b>You 👻</b><i> a moment ago</i>
+      <br/>
+      ${messageInput.value}
+      </p>
+      `
       messageLog.appendChild(newChat);
       newChat.scrollIntoView();
       messageInput.value = '';
@@ -255,7 +278,13 @@ export function wizardChat(wm) {
       setTimeout(function() {
         var response = responses[Math.floor(Math.random()*responses.length)];
         var newChat = document.createElement('p');
-        newChat.innerText = response;
+        newChat.innerHTML = `
+        <br/>
+        <b>Wizard</b> 🔮 <i>a moment ago</i>
+        <br/>
+        ${response}
+        </p>
+        `
         messageLog.appendChild(newChat);
         newChat.scrollIntoView();
       }, 1000);
