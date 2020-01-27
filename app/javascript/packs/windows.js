@@ -35,6 +35,11 @@ export function work(wm)
     width: 1100,
     height: 700,
     x: 100, y: 100,
+    backgroundColorWindow: 'ffffff',
+    titlebarHeight: '45px',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
     title: "Allvuu",
     maximizable: false,
     resizable: false,
@@ -75,6 +80,11 @@ export function textEditor(wm)
     height: 400,
     x: 400, y: 200,
     title: "Tea",
+    backgroundColorWindow: 'ffffff',
+    titlebarHeight: '45px',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
   })
   var textarea = document.createElement
   test.content.innerHTML = `
@@ -103,6 +113,11 @@ export function dumpster(wm)
     height: 300,
     x: 300, y: 500,
     title: "Dempster",
+    backgroundColorWindow: 'ffffff',
+    titlebarHeight: '45px',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
   })
   var textarea = document.createElement
   test.content.innerHTML = `
@@ -177,6 +192,11 @@ export function play(video, wm)
     minimizable: true,
     titleCenter: true,
     minimizeSize: 200,
+    backgroundColorWindow: 'ffffff',
+    titlebarHeight: '45px',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
   })
   test.content.style.padding = '0.5em'
   test.content.style.backgroundColor = 'black'
