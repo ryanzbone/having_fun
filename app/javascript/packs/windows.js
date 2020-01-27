@@ -191,7 +191,7 @@ export function play(video, wm)
     maximizable: false,
     minimizable: true,
     titleCenter: true,
-    minimizeSize: 200,
+    minimizeSize: 400,
     backgroundColorWindow: 'ffffff',
     titlebarHeight: '45px',
     backgroundColorTitlebarActive: '#7eb4f8',
