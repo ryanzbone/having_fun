@@ -12,12 +12,16 @@ export function runQuiz() {
       context.audio.addEventListener('ended', function() {
         if(context.nextQuestion != null) {
           context.nextQuestion.classList.remove('invisible');
+          context.dialog.classList.add('invisible');
         } else {
           var scoreEvent = new CustomEvent('calculateScore', { detail: score });
           document.dispatchEvent(scoreEvent);
           document.getElementById('submit-quiz').classList.remove('invisible');
           document.getElementById('final-dialog').classList.remove('invisible');
         }
+      });
+      context.audio.addEventListener('play', function() {
+        context.dialog.classList.remove('invisible');
       });
       context.audio.play();
     }
@@ -35,7 +39,13 @@ function questionContext() {
     }
   }
   var audio = visible.querySelector('audio')
-  return { audio: audio, currentQuestion: visible, nextQuestion: questions[qIndex + 1] };
+  var dialog = visible.querySelector('p.dialog')
+  return {
+    audio: audio,
+    currentQuestion: visible.querySelector('div.question-and-buttons'),
+    nextQuestion: questions[qIndex + 1],
+    dialog: dialog,
+  };
 }
 
 function questionScore(question) {
@@ -69,6 +79,10 @@ export function titleScreen(wm)
     <p class="mb-2">If you’d like to contribute to actual real life important ecology data without the fun visit <a href="https://instantwild.zsl.org">instantwild.zsl.org</a></p>
     <button id="start-game" class="sbtn mt-5">Start Game</button>
   </div>
+    <audio id="audio-introduction"  src="<%= audio_path('clip1.mp3') %>" type="audio/mp3"> </audio>
+    <p class="dialog intro-dialog invisible"><i>
+      “Hey bud! Looks like you’re the only one who made it back from orientation! Ha! We like to have fun around here! Ahhhhhh but no seriously, we do very important work here at GlobalEarth. Before we get you started on the database we want to see how you’re going to fit in around here.”
+    </i></p>
   `
   test.win.addEventListener('test', function() { alert('wow'); });
   return test
@@ -88,79 +102,86 @@ export function quiz(wm)
     movable: false
   })
   test.content.style.padding = '0.5em'
+  test.content.style.backgroundColor = 'black'
+  test.content.style.color = 'white'
   test.content.innerHTML = `
-    <audio id="audio-introduction"  src="<%= audio_path('clip1.mp3') %>" type="audio/mp3"></audio>
     <form id="quiz">
       <fieldset id="group1" class="centered question">
-        <p class="dialog"><i>
-        “Hey bud! Looks like you’re the only one who made it back from orientation! Ha! We like to have fun around here! Ahhhhhh but no seriously, we do very important work here at GlobalEarth. Before we get you started on the database we want to see how you’re going to fit in around here.”
-        </i></p>
-        <p class="mb-5 question-text">I lose interest quickly if I don't get to learn new things.</p>
-        <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
-        <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
-        <button class="button-question sbtn" value=3 name="group1">Never</button>
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I lose interest quickly if I don't get to learn new things.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
         <audio src="<%= audio_path('clip2.mp3') %>" type="audio/mp3"></audio>
+        <p class="dialog invisible "><i>
+        “Two hundred and fifty slides on parking policies and pensions. HR loses as many people as they hire!”
+        </i></p>
       </fieldset>
 
       <fieldset id="group2" class="centered question invisible">
-        <p class="dialog"><i>
-        “Two hundred and fifty slides on parking policies and pensions. HR loses as many people as they hire! ”
-        </i></p>
-        <p class="mb-5 question-text">I believe stories are the best way to get a point across.</p>
-        <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
-        <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
-        <button class="button-question sbtn" value=3 name="group1">Never</button>
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I believe stories are the best way to get a point across.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
         <audio src="<%= audio_path('clip3.mp3') %>" type="audio/mp3"></audio>
+        <p class=" invisible dialog"><i>
+        “Oh boy we love to tell stories around here! Dave in HR was telling me about a growth on his… Well let me just say that I'd have to speak with Dave in HR if I told you”
+        </i></p>
       </fieldset>
 
       <fieldset id="group3" class="centered question invisible">
-        <p class="dialog"><i>
-        “Oh boy we love to tell stories around here! Dave in HR was telling me about a growth on his… Well let me just say that I'd have to speak with Dave in HR if I told you”
-        </i></p>
-        <p class="mb-5 question-text">I need to take control of situations that seem to be out of control.</p>
-        <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
-        <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
-        <button class="button-question sbtn" value=3 name="group1">Never</button>
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I need to take control of situations that seem to be out of control.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
         <audio src="<%= audio_path('clip4.mp3') %>" type="audio/mp3"></audio>
+        <p class=" invisible dialog"><i>
+        “You know who’s out of control!? That Dave in HR! But you saw the orientation Power Point, you know”
+        </i></p>
       </fieldset>
 
       <fieldset id="group4" class="centered question invisible">
-        <p class="dialog"><i>
-        “You know who’s out of control!? That Dave in HR! But you saw the orientation Power Point, you know”
-        </i></p>
-        <p class="mb-5 question-text">I believe that even the most disadvantageous peace is better than any direct conflict.</p>
-        <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
-        <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
-        <button class="button-question sbtn" value=3 name="group1">Never</button>
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I believe that even the most disadvantageous peace is better than any direct conflict.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
         <audio src="<%= audio_path('clip5.mp3') %>" type="audio/mp3"></audio>
+        <p class=" invisible dialog"><i>
+        “A girl in college told me I have a disadvantageous peace HEY OH!!!”
+        </i></p>
       </fieldset>
 
       <fieldset id="group5" class="centered question invisible">
-        <p class="dialog"><i>
-        “A girl in college told me I have a disadvantageous peace HEY OH!!!”
-        </i></p>
-        <p class="mb-5 question-text">I find it difficult to incorporate new ideas with my existing world view.</p>
-        <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
-        <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
-        <button class="button-question sbtn" value=3 name="group1">Never</button>
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I find it difficult to incorporate new ideas with my existing world view.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
         <audio src="<%= audio_path('clip6.mp3') %>" type="audio/mp3"></audio>
       </fieldset>
+      <div class="centered">
+        <p class="dialog invisible" id="final-dialog"><i>
+          “OK BOOMER! (Laughs uncontrollably) Dave says we can’t say it in interviews anymore but you’re already hired! (More loud obnoxious laughter)”
+          <br/>
+          Knock on the door
+          <br/>
+          (Outside voice)
+          “I know you’re having fun, but I’m still working”
+
+          <br/>
+          </i>
+        </p>
+        <button class="invisible centered sbtn start-working" id="submit-quiz">Start Working</button>
+      </div>
   </form>
-  <div class="centered">
-    <p class="dialog invisible" id="final-dialog"><i>
-    “OK BOOMER! (Laughs uncontrollably) Dave says we can’t say it in interviews anymore but you’re already hired! (More loud obnoxious laughter)”
-
-<br/>
-    Knock on the door
-
-<br/>
-    (Outside voice)
-  “I know you’re having fun, but I’m still working”
-
-<br/>
-</i></p>
-    <button class="xinvisible sbtn start-working" id="submit-quiz">Start Working</button>
-  </div>
 `
   return test
 }

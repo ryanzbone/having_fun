@@ -59,10 +59,14 @@ window.onload = () =>
   titleScreenWindow.open();
   document.getElementById('start-game').addEventListener('click', function(event) {
     event.preventDefault();
-    titleScreenWindow.close();
     var audio = document.getElementById('audio-introduction');
     audio.addEventListener('ended', function() {
+      titleScreenWindow.close();
       quizWindow.open();
+    });
+    audio.addEventListener('play', function() {
+      document.querySelector('p.intro-dialog').classList.remove('invisible');
+      document.querySelector('div.title-text').classList.add('invisible');
     });
     audio.play()
   });
