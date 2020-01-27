@@ -3,6 +3,7 @@ import {
   work,
   play,
   dumpster,
+  titleSplash,
   textEditor,
   moveWindow,
   resizeWindow,
@@ -32,6 +33,7 @@ wm.overlay.innerHTML = `
   <audio class="os-start" src="<%= audio_path('windows31.mp3') %>" type="audio/mp3"></audio>
   <audio id="bloop" src="<%= audio_path('bloop.mp3') %>" type="audio/mp3"></audio>
 `
+wm.overlay.style.backgroundColor = 'black';
 
 var score = 0;
 var quizWindow = quiz(wm);
@@ -112,6 +114,8 @@ function desktop(score) {
   var chatIcon = appIcon('chat', wizardChat(wm), 500, 20, '<%= image_path('chat.png') %>', wm).open({ noFocus: true });
   scheduleChats(wm, chatIcon);
 
+  titleSplash(wm).open();
+
   // workWindow.open();
   setTimeout(function() {
     if(playWindow.closed) {
@@ -119,10 +123,6 @@ function desktop(score) {
     }
   }, playWindowOpensAt);
   playWindow.on('open', function() {
-    // Always keep play window on top
-//    setInterval(function() {
- //     playWindow.sendToFront();
-  //  }, 100);
 
     // Set move window interval
     window.setInterval(function() {

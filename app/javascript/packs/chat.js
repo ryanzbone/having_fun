@@ -1,103 +1,107 @@
 export function scheduleChats(wm)
 {
   var daveChats = [
-    'Hey bud',
-    'We need a photo of you for your ID',
-    'If you want to just add me on Facebook real quick I can pick one for you.',
-    'Ill choose one where you looks good ;P',
+    "<p><b>Dave S.</b> 🎅 <i>a moment ago</i></p><p>Hey bud</p>",
+    '<p>We need a photo of you for your ID</p>',
+    '<p>If you want to just add me on Facebook real quick I can pick one for you.</p>',
+    '<p>Ill choose one where you looks good ;P</p>',
   ];
 
   var susanChats = [
-    "Interesting article",
-    "https://www.safetyworksmaine.gov/safe_workplace/safety_management/",
-    "IIt's about creating a safe work environment",
-    "EVERYONE is responsible for keeping the workplace SAFE and WELCOMING",
-    "Clearly last months super soaker get together by the employee activation counicl could take some notes",
+    "<p><b>Susan M.</b> 🌴 <i>a moment ago</i></p><p>Interesting article</p>",
+    "<p><a target='_blank' href='https://www.safetyworksmaine.gov/safe_workplace/safety_management/'>https://www.safetyworksmaine.gov/safe_workplace/safety_management/</a></p>",
+    "<p>IIt's about creating a safe work environment</p>",
+    "<p>EVERYONE is responsible for keeping the workplace SAFE and WELCOMING</p>",
+    "<p>Clearly last months super soaker get together by the employee activation counicl could take some notes</p>",
   ];
 
   var daveChat2 = [
-    "Hey bud ",
-    "Sorry if that was a bit weird",
-    "We just like to keep things super cas at work",
-    "Everybody adds each other on social and all that",
-    "Here's a picture of me if that makes things a bit less akward",
-    "https://imgur.com/a/edJPm",
-    ":)",
-    "Wait. Sorry wrong pic",
-    "https://imgur.com/a/edJPm",
+    "<p><b>Dave S.</b> 🎅 <i>a moment ago</i></p><p>Hey bud</p>",
+    "<p>Sorry if that was a bit weird</p>",
+    "<p>We just like to keep things super cas at work</p>",
+    "<p>Everybody adds each other on social and all that</p>",
+    "<p>Here's a picture of me if that makes things a bit less akward</p>",
+    "<p><a target='_blank' href='https://imgur.com/a/edJPm'>https://imgur.com/a/edJPm</a></p>",
+    "<p>:)</p>",
+    "<p>Wait. Sorry wrong pic</p>",
+    "<p><a target='_blank' href='https://imgur.com/a/edJPm'>https://imgur.com/a/edJPm</a></p>",
   ]
   var eac = [
-    'EAC: JOIN THE EMPLOYEE ACTIVATION COUNSIL TODAY AT THREE FOR FREE DOUGHNUTS AND A MOVIE TO CELEBRATE WOMANS HISTORY MONTH.',
-    'EAC: WE WILL BE SHOWING RAMPAGE',
-    'EAC: STARING DWAYNE THE ROCK JOHNSON',
-    'EAC: DOUGHNUTS ARE FIRST COME FIRST SERVE.',
+    '<p><b>EAC</b> 🤖 <i>a moment ago</i> </p><p>JOIN THE EMPLOYEE ACTIVATION COUNSIL TODAY AT THREE FOR FREE DOUGHNUTS AND A MOVIE TO CELEBRATE WOMANS HISTORY MONTH.',
+    '<p>WE WILL BE SHOWING RAMPAGE',
+    '<p>STARING DWAYNE THE ROCK JOHNSON',
+    '<p>DOUGHNUTS ARE FIRST COME FIRST SERVE.',
   ]
   var susanKaren = [
-    "Susan: Rampage!?!",
-    "Karen: Unbelievable",
-    "Susan: How could anyone possibly think that this is in anyway acceptible for womans history month",
-    "Susan: Who's responsible for running the EAC",
-    "Karen: I have a meeting at three",
-    "Karen: I'm going to miss the doughnuts",
-    "Karen: I never get any doughnuts",
-    "Karen: Unbelievable",
-    "Karen: I think Dave in HR is still in charge",
+`<p>Susan M. 🌴, Karen P.👼</p>
+<p>👨‍👩‍👧‍👦 3 members</p>
+<br/>
+<p><b>Susan M. 🌴</b> <i>a moment ago</i></p>
+<p>Rampage!?!</p>`,
+    "<p><b>Karen P.</b> 👼 <i>a moment ago</i></p><p>Unbelievable</p>",
+    "<b>Susan M.</b> 🌴 <i>a moment ago</i></p><p>How could anyone possibly think that this is in anyway acceptible for womans history month</p>",
+    "Who's responsible for running the EAC</p>",
+    "<b>Karen P.</b> 👼 <i>a moment ago</i></p><p>I have a meeting at three</p>",
+    "I'm going to miss the doughnuts</p>",
+    "I never get any doughnuts</p>",
+    "Unbelievable</p>",
+    "I think Dave in HR is still in charge</p>",
   ]
   var daveChat3 = [
-    "Hey bud",
-    "Hey forget about the picture thing",
-    "I'll just stop by and take a picture later",
-    "Or we can do it after work if you're busy",
-    "Whatever works for you",
+    "<b>Dave S</b>. 🎅 <i>a moment ago</i></p><p>Hey bud</p>",
+    "<p>Hey forget about the picture thing</p>",
+    "<p>I'll just stop by and take a picture later</p>",
+    "<p>Or we can do it after work if you're busy</p>",
+    "<p>Whatever works for you</p>",
   ]
   var chris = [
-    "LOOK AT THIS FOOKIN PUP",
-    "https://imgur.com/a/edJPm",
-    ":'D",
-    "SO GOOD",
+    "<b>Chris B.</b> 😝 <i>a moment ago</i></p><p>LOOK AT THIS FOOKIN PUP</p>",
+    "<p><a target='_blank' href='https://imgur.com/a/edJPm'>https://imgur.com/a/edJPm</a></p>",
+    "<p>:'D</p>",
+    "<p>SO GOOD</p>",
   ]
   var daveChat4 = [
-    "Hey bud",
-    "Sorry if that was a bit weird",
-    "Every employee is required to have a photo for their ID badge",
-    "I just thought it would be nice to have a casual one of you at your desk",
-    "It's just more relaxed",
-    "We like to create more of a fun work environment around here",
-    "Just having a bit of fun :D",
+    "<b>Dave S.</b> 🎅 <i>a moment ago</i></p><p>Hey bud</p>",
+    "<p>Sorry if that was a bit weird</p>",
+    "<p>Every employee is required to have a photo for their ID badge</p>",
+    "<p>I just thought it would be nice to have a casual one of you at your desk</p>",
+    "<p>It's just more relaxed</p>",
+    "<p>We like to create more of a fun work environment around here</p>",
+    "<p>Just having a bit of fun :D</p>",
   ]
   var ryanCasey = [
-    "Ryan: Video games?",
-    "Casey: My place tonight?",
-    "Ryan: Sure thing!",
-    "Ryan: You have Destiney DL?",
-    "Casey: Says it'll take 12 hours to update",
-    "Ryan: Smash it is",
+    "<p>Ryan B. 🧙‍, Casey T. 😎</p><p>👨‍👩‍👧‍👦 3 members</p><p><b>Ryan B.</b> 🧙‍♂️ <i>a moment ago</i></p><p>Video games?</p>",
+    "<p><b>Casey T.</b> 😎 <i>a moment ago</i></p><p>My place tonight?</p>",
+    "<p><b>Ryan B.</b> 🧙‍♂️ <i>a moment ago</i></p><p>Sure thing!</p>",
+    "<p>You have Destiney DL?</p>",
+    "<p><b>Casey T.</b> 😎 <i>a moment ago</i></p><p>Says it'll take 12 hours to update</p>",
+    "<p><b>Ryan B.</b> 🧙‍♂️ <i>a moment ago</i></p><p>Smash it is</p>",
   ]
   var daveChat5 = [
-    "Hey bud",
-    "Susan's going to get your picture tomorrow",
-    "I'm going to be out tomorrow",
-    "And for the rest of the month",
-    "I actually don't work here anymore",
-    "I've never seen someone have such an amazing first day",
-    "You're going to do really amazing things",
-    "Drop me a DM in my insta @DaveinHR if you wanna go to Casey's place and smash later",
-    "Wait",
-    "Sorry if that was a bit weird",
-    "I just",
-    "Nevermind",
+    "<p><b>Dave S.</b> 😿 <i>a moment ago</i></p><p>Hey bud</p>",
+    "<p>Susan's going to get your picture tomorrow</p>",
+    "<p>I'm going to be out tomorrow</p>",
+    "<p>And for the rest of the month</p>",
+    "<p>I actually don't work here anymore</p>",
+    "<p>I've never seen someone have such an amazing first day</p>",
+    "<p>You're going to do really amazing things</p>",
+    "<p>Drop me a DM in my insta @DaveinHR if you wanna go to Casey's place and smash later</p>",
+    "<p>Wait</p>",
+    "<p>Sorry if that was a bit weird</p>",
+    "<p>I just</p>",
+    "<p>Nevermind</p>",
   ]
   var allChats = [
-    { name: 'Dave 🐶', messages: daveChats },
-    { name: 'Susan 🌵', messages: susanChats },
-    { name: 'Dave 🙈', messages: daveChat2 },
+    { name: 'Dave S. 🎅', messages: daveChats },
+    { name: 'Susan M. 🌴', messages: susanChats },
+    { name: 'Dave S. 🎅', messages: daveChat2 },
     { name: 'EAC 🏢', messages: eac },
-    { name: 'Susan 🌵 and Karen 🎻', messages: susanKaren },
-    { name: 'Dave 📷', messages: daveChat3 },
-    { name: 'Chris 👀', messages: chris },
-    { name: 'Dave 🎈', messages: daveChat4 },
-    { name: 'Ryan 🕹 and Casey 🔉', messages: ryanCasey },
-    { name: 'Dave 😿', messages: daveChat5 },
+    { name: 'Group Chat', messages: susanKaren },
+    { name: 'Dave S. 🎅', messages: daveChat3 },
+    { name: 'Chris B. 😝', messages: chris },
+    { name: 'Dave S. 🎅', messages: daveChat4 },
+    { name: 'Group Chat', messages: ryanCasey },
+    { name: 'Dave S. 😿', messages: daveChat5 },
   ]
   var chatIndex = 0;
   var timeBetweenChats = 45000;
@@ -161,11 +165,11 @@ function chatWindow(wm, character, chats) {
         return;
       } else {
         var newChat = document.createElement('p');
-        newChat.innerText = chats[index];
+        newChat.innerHTML = chats[index];
         messageLog.appendChild(newChat);
         bloop.play();
         newChat.scrollIntoView();
-        setTimeout(function() { sendMessage(index + 1) }, 3000 + (6000 * Math.random()));
+        setTimeout(function() { sendMessage(index + 1) }, 2000 + (6000 * Math.random()));
       }
     }
     sendMessage(0)

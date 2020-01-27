@@ -61,15 +61,11 @@ export function titleScreen(wm)
     movable: false
   })
   test.content.style.padding = '0.5em'
-  test.content.backgroundColor = 'black'
-  test.content.color = 'white'
+  test.content.style.backgroundColor = 'black'
+  test.content.style.color = 'white'
   test.content.innerHTML = `
-  <div class="centered mt-9000">
-    <h1 class="play-title">(I Know You're Having Fun But)</h1>
-    <h1 class="work-title">I'm Still Working</h1>
-  </div>
   <div class="centered title-text">
-    <p class="mb-2">We all have too much fun at work from time to time. In this game you’ll contribute to actual real life important ecology data while dealing with a workplace that likes to have just a little too much fun.</p>
+    <p class="mb-4">This is (I Know You’re Having Fun But) I’m Still Working. We all have too much fun at work from time to time. In this game you’ll contribute to actual real life important ecology data while dealing with a workplace that likes to have just a little too much fun.</p>
     <p class="mb-2">If you’d like to contribute to actual real life important ecology data without the fun visit <a href="https://instantwild.zsl.org">instantwild.zsl.org</a></p>
     <button id="start-game" class="sbtn mt-5">Start Game</button>
   </div>
@@ -163,7 +159,7 @@ export function quiz(wm)
 
 <br/>
 </i></p>
-    <button class="invisible sbtn start-working" id="submit-quiz">Start Working</button>
+    <button class="xinvisible sbtn start-working" id="submit-quiz">Start Working</button>
   </div>
 `
   return test

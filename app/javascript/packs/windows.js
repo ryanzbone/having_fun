@@ -44,6 +44,30 @@ export function work(wm)
   return test
 }
 
+export function titleSplash(wm)
+{
+  const test = wm.createWindow({
+    width: 1200, height: 800,
+    x: 100, y: 100,
+    backgroundColorWindow: 'ffffff',
+    titlebarHeight: '45px',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
+    minimizable: false,
+    maximizable: false,
+    resizable: false
+  })
+  test.content.style.padding = '0.5em'
+  test.content.style.backgroundColor = 'black'
+  test.content.style.color = 'white'
+  test.content.innerHTML = `
+  <div class="centered mt-9000">
+    <h1 class="play-title">(I Know You're Having Fun But)</h1>
+    <h1 class="work-title">I'm Still Working</h1>
+  </div> `
+  return test
+}
 export function textEditor(wm)
 {
   const test = wm.createWindow({

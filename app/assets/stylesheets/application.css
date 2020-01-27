@@ -15,8 +15,9 @@
  */
 
 body {
-  font-family: arvo !important;
-  overflow: hidden !important;;
+  font-family: 'Montserrat', sans-serif !important;
+  overflow: hidden !important;
+  background-color: black;
 }
 
 .full-frame {
@@ -30,20 +31,20 @@ body {
 }
 
 .sbtn {
-  background-color: #f0803a; /* Orangey */
+  background-color: #7eb4f8;
   border: none;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-family: arvo;
+  font-family: 'Montserrat', sans-serif !important;
   -webkit-transition-duration: 0.2s; /* Safari */
   transition-duration: 0.2s;
   font-size: 1.5em;
 }
 .sbtn:hover {
-  background-color: #8e3d0b; /* Green */
+  background-color: #308cff;
   color: white;
 }
 
@@ -61,13 +62,13 @@ h2 {
 
 .work-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 4em;
+  font-size: 8em;
   margin-top: 0;
 }
 
 .play-title {
   font-family: 'Permanent Marker', cursive;
-  font-size: 2.07em;
+  font-size: 4.07em;
   margin-bottom: 0;
 }
 .title-text {
@@ -78,7 +79,7 @@ h2 {
   margin-top: 30px;
 }
 .quiz-font {
-  font-family: 'Arvo', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 .question-text {
   font-size: 2.5em;
@@ -113,7 +114,7 @@ textarea {
 }
 
 .mt-9000 {
-  margin-top: 150px;
+  margin-top: 250px;
 }
 
 .bsod {
