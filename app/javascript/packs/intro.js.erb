@@ -17,11 +17,15 @@ export function runQuiz() {
           var scoreEvent = new CustomEvent('calculateScore', { detail: score });
           document.dispatchEvent(scoreEvent);
           document.getElementById('submit-quiz').classList.remove('invisible');
-          document.getElementById('final-dialog').classList.remove('invisible');
+          document.getElementById('final-dialog').classList.add('invisible');
         }
       });
       context.audio.addEventListener('play', function() {
-        context.dialog.classList.remove('invisible');
+        if(context.nextQuestion != null) {
+          context.dialog.classList.remove('invisible');
+        } else {
+          document.getElementById('final-dialog').classList.remove('invisible');
+        }
       });
       context.audio.play();
     }
@@ -167,18 +171,18 @@ export function quiz(wm)
         </div>
         <audio src="<%= audio_path('clip6.mp3') %>" type="audio/mp3"></audio>
       </fieldset>
-      <div class="centered">
-        <p class="dialog invisible" id="final-dialog"><i>
-          “OK BOOMER! (Laughs uncontrollably) Dave says we can’t say it in interviews anymore but you’re already hired! (More loud obnoxious laughter)”
-          <br/>
-          Knock on the door
-          <br/>
-          (Outside voice)
-          “I know you’re having fun, but I’m still working”
+      <p class="dialog invisible" id="final-dialog"><i>
+        “OK BOOMER! (Laughs uncontrollably) Dave says we can’t say it in interviews anymore but you’re already hired! (More loud obnoxious laughter)”
+        <br/>
+        Knock on the door
+        <br/>
+        (Outside voice)
+        “I know you’re having fun, but I’m still working”
 
-          <br/>
-          </i>
-        </p>
+        <br/>
+        </i>
+      </p>
+      <div class="centered">
         <button class="invisible centered sbtn start-working" id="submit-quiz">Start Working</button>
       </div>
   </form>
