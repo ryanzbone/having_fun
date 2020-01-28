@@ -79,8 +79,14 @@ export function titleScreen(wm)
   test.content.style.color = 'white'
   test.content.innerHTML = `
   <div class="centered title-text">
-    <p class="mb-4">This is (I Know You’re Having Fun But) I’m Still Working. We all have too much fun at work from time to time. In this game you’ll contribute to actual real life important ecology data while dealing with a workplace that likes to have just a little too much fun.</p>
-    <p class="mb-2">If you’d like to contribute to actual real life important ecology data without the fun visit <a href="https://instantwild.zsl.org">instantwild.zsl.org</a></p>
+    <p class="mb-4">
+      This is (I Know You’re Having Fun But) I’m Still Working, a game by Ryan, Chris, and Casey.
+    </p>
+    <p class="mb-4">
+      In this game you'll contribute to ecology data while dealing with a workplace that likes to have just a little too much fun. It is best enjoyed in full screen with sound on. Your choices in the beginning will affect the content of the game.
+    </p>
+
+    <p class="mb-4">If you’d like to contribute to ecology data without the fun visit <a href="https://instantwild.zsl.org">instantwild.zsl.org</a></p>
     <button id="start-game" class="sbtn mt-5">Start Game</button>
   </div>
     <audio id="audio-introduction"  src="<%= audio_path('clip1.mp3') %>" type="audio/mp3"> </audio>

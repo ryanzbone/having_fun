@@ -76,8 +76,8 @@ export function titleSplash(wm)
 export function textEditor(wm)
 {
   const test = wm.createWindow({
-    width: 300,
-    height: 400,
+    width: 500,
+    height: 600,
     x: 400, y: 200,
     title: "Tea",
     backgroundColorWindow: '#ffffff',
@@ -93,6 +93,23 @@ To do:
 - Far cry 2
 - Baboo
 - The wizaaaarrrd
+
+Credits:
+Programmer - Ryan Bone
+Audio - Casey Toney
+Streamer - Casey Toney
+Lighting - Casey Toney
+Art - Casey Toney
+Writing - Chris Berg, Casey Toney
+Game Design - Ryan Bone, Chris Berg, Casey Toney
+
+Fiancé - Casey Toney
+Fiancé Friend - Chris Berg
+Nostalgic Gamer 1 - Casey Toney
+Nostalgic Gamer 2 - Chris Berg
+Hostile Charity Host - Casey Toney
+Injured Player - Chris Berg
+Community Organizer - Ryan Bone
 </textarea>
   `
 
