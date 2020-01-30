@@ -215,6 +215,7 @@ export function play(video, wm)
     backgroundColorTitlebarInactive: '#97b4d8',
     borderRadius: "0px",
   })
+  test.win.id = 'streamWindow'
   test.content.style.padding = '0.5em'
   test.content.style.backgroundColor = 'black'
   test.content.innerHTML='<div id="twitch-embed" class="full-frame"></div>'
@@ -228,15 +229,17 @@ export function play(video, wm)
     iframe.removeAttribute('width');
     iframe.removeAttribute('height');
     iframe.classList.add('full-frame');
-    embed.addEventListener('gameOver', function() {
-      console.log('game over event recieved by twitch object');
-      embed.pause();
+    document.addEventListener('pauseStream', function() {
+      embed.player.pause();
+    });
+    document.addEventListener('playStream', function() {
+      embed.player.play();
     });
   });
   document.addEventListener('gameOver', function(event) {
     console.log('game over event recieved by play window');
-    test.removeAllListeners();
-    test.close();
+    var streamWindow = document.getElementById('streamWindow');
+    streamWindow.parentNode.removeChild(streamWindow);
   });
   test.on('close', function(event) {
     test.open();
