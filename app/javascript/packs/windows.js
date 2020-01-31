@@ -288,9 +288,10 @@ export function resizeWindow(target, scaleRate) {
   var maxWidth = 800;
   var minWidth = 400;
   var minHeight = 300;
-  var scaleRatio = 1.77;
+  var scaleRatio = 1.6;
 
   var newWidth = minWidth + (Math.random() * maxWidth);
+  var newHeight = newWidth/scaleRatio;
 
   var intervalId = setInterval(frame, 10);
 
@@ -302,10 +303,14 @@ export function resizeWindow(target, scaleRate) {
       timer++;
       if(target.width <= newWidth) {
         target.width = target.width + scaleRate;
-        target.height = target.height + (scaleRate/scaleRatio);
       } else if(target.width > newWidth) {
         target.width = target.width - scaleRate;
-        target.height = target.height - (scaleRate/scaleRatio);
+      }
+
+      if(target.height <= newHeight) {
+        target.height = target.height + scaleRate;
+      } else if(target.height > newHeight) {
+        target.height = target.height - scaleRate;
       }
     }
   }

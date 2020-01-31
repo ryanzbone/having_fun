@@ -17,11 +17,6 @@
 body {
   font-family: 'Montserrat', sans-serif !important;
   background-color: black;
-}
-
-html, body {
-  margin: 0;
-  height: 100%;
   overflow: hidden !important;
 }
 
