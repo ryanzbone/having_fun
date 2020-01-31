@@ -9,7 +9,7 @@ export function scheduleChats(wm)
 
   var susanChats = [
     "<p><b>Susan M.</b> 🌴 <i>a moment ago</i></p><p>Interesting article</p>",
-    "<p><a target='_blank' href='https://www.safetyworksmaine.gov/safe_workplace/safety_management/'>https://www.safetyworksmaine.gov/safe_workplace/safety_management/</a></p>",
+    "<p><a class='browser-link' href='https://www.safetyworksmaine.gov/safe_workplace/safety_management/' >https://www.safetyworksmaine.gov/safe_workplace/safety_management/</a></p>",
     "<p>IIt's about creating a safe work environment</p>",
     "<p>EVERYONE is responsible for keeping the workplace SAFE and WELCOMING</p>",
     "<p>Clearly last months super soaker get together by the employee activation counicl could take some notes</p>",
@@ -21,10 +21,10 @@ export function scheduleChats(wm)
     "<p>We just like to keep things super cas at work</p>",
     "<p>Everybody adds each other on social and all that</p>",
     "<p>Here's a picture of me if that makes things a bit less akward</p>",
-    "<p><a target='_blank' href='https://imgur.com/a/edJPm'>https://imgur.com/a/edJPm</a></p>",
+    "<p><a class='browser-link' href='https://i.ibb.co/TcmRfyJ/dr-ian-malcolm-jurassic-park-jeff-goldblum-chaos-e1531929342928.jpg'>https://radpict.com/a/edJPm</a></p>",
     "<p>:)</p>",
     "<p>Wait. Sorry wrong pic</p>",
-    "<p><a target='_blank' href='https://imgur.com/a/edJPm'>https://imgur.com/a/edJPm</a></p>",
+    "<p><a class='browser-link' href='https://i.ibb.co/dJWd9sf/MV5-BNTE3-ODQ4-Njkw-NV5-BMl5-Ban-Bn-Xk-Ft-ZTcw-Mzg4-OTI3-OA-V1-SY1000-CR0013481000-AL.jpg'>https://radpict.com/a/34j0df</a></p>",
   ]
   var eac = [
     '<p><b>EAC</b> 🤖 <i>a moment ago</i> </p><p>JOIN THE EMPLOYEE ACTIVATION COUNSIL TODAY AT THREE FOR FREE DOUGHNUTS AND A MOVIE TO CELEBRATE WOMANS HISTORY MONTH.',
@@ -56,7 +56,7 @@ export function scheduleChats(wm)
   ]
   var chris = [
     "<b>Chris B.</b> 😝 <i>a moment ago</i></p><p>LOOK AT THIS FOOKIN PUP</p>",
-    "<p><a target='_blank' href='https://imgur.com/a/edJPm'>https://imgur.com/a/edJPm</a></p>",
+    "<p><a class='browser-link' href='https://i.ibb.co/0YMxNnt/177ebac786ae5311149bcf964067dc0a.jpg'>https://radpict.com/a/ncKDjj</a></p>",
     "<p>:'D</p>",
     "<p>SO GOOD</p>",
   ]
@@ -95,7 +95,7 @@ export function scheduleChats(wm)
     { name: 'Dave S. 🎅', messages: daveChats },
     { name: 'Susan M. 🌴', messages: susanChats },
     { name: 'Dave S. 🎅', messages: daveChat2 },
-    { name: 'EAC 🏢', messages: eac },
+    { name: 'EAC 🤖', messages: eac },
     { name: 'Group Chat', messages: susanKaren },
     { name: 'Dave S. 🎅', messages: daveChat3 },
     { name: 'Chris B. 😝', messages: chris },
@@ -159,7 +159,9 @@ function chatWindow(wm, character, chats) {
     }
   });
 
-  test.on('open', function(event) {
+  var chatIndex = 0;
+  test.on('close', function(event) { test.open(); });
+  test.once('open', function(event) {
     var messageLog = test.win.querySelector("div.chat-log");
     var bloop = document.getElementById('bloop');
 
@@ -172,12 +174,24 @@ function chatWindow(wm, character, chats) {
         var newChat = document.createElement('p');
         newChat.innerHTML = chats[index];
         messageLog.appendChild(newChat);
+        linkify(newChat);
         bloop.play();
+        test.focus();
         newChat.scrollIntoView();
         setTimeout(function() { sendMessage(index + 1) }, 2000 + (6000 * Math.random()));
       }
     }
-    sendMessage(0)
+
+    function linkify(newChat) {
+      var link = newChat.querySelector('a.browser-link');
+      if(link != null) {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          browser(wm, link.href);
+        });
+      }
+    }
+    sendMessage(chatIndex);
   });
 
   document.addEventListener('click', function(event) {
@@ -291,4 +305,25 @@ export function wizardChat(wm) {
     }
   });
   return test
+}
+export function browser(wm, source)
+{
+  const test = wm.createWindow({
+    width: 800, height: 600,
+    x: 100, y: 100,
+    backgroundColorWindow: '#ffffff',
+    titlebarHeight: '45px',
+    title: 'NetSquirrelNavigator',
+    backgroundColorTitlebarActive: '#7eb4f8',
+    backgroundColorTitlebarInactive: '#97b4d8',
+    borderRadius: "0px",
+    minimizable: true,
+    maximizable: false,
+    resizable: true
+  })
+  test.content.style.padding = '0.5em'
+  test.content.innerHTML = `
+  <iframe frameborder="0" class="full-frame" src=${source}></iframe>
+  `
+  test.open();
 }

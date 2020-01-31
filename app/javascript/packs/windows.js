@@ -44,9 +44,9 @@ export function work(wm)
     maximizable: false,
     resizable: false,
   })
-  test.content.style.padding = '0.5em'
-  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://instantwild.zsl.org/task/95049"></iframe>'
-  return test
+  test.content.style.padding = '0.5em';
+  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://instantwild.zsl.org/task/95049"></iframe>';
+  return test;
 }
 
 export function titleSplash(wm)

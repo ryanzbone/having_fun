@@ -76,6 +76,8 @@ window.onload = () =>
 
   runQuiz();
 
+  window.addEventListener('scroll', function(event) { window.scroll(0, 0); });
+
   // run game loop
   document.getElementById('submit-quiz').addEventListener('click', function(event) {
     event.preventDefault();

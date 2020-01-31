@@ -16,8 +16,13 @@
 
 body {
   font-family: 'Montserrat', sans-serif !important;
-  overflow: hidden !important;
   background-color: black;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden !important;
 }
 
 .full-frame {
