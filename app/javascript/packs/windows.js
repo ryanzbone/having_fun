@@ -102,7 +102,7 @@ Lighting - Casey Toney
 Art - Casey Toney
 Writing - Chris Berg, Casey Toney
 Game Design - Ryan Bone, Chris Berg, Casey Toney
-Music - Louie Zong
+Featuring the song “The Mii Channel” from the album Video Games by Louie Zong
 
 Fiancé - Casey Toney
 Fiancé Friend - Chris Berg
