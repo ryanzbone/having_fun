@@ -32,6 +32,7 @@ wm.overlay.innerHTML = `
   <audio class="os-start" src="<%= audio_path('windowsme.mp3') %>" type="audio/mp3"></audio>
   <audio class="os-start" src="<%= audio_path('windows31.mp3') %>" type="audio/mp3"></audio>
   <audio id="bloop" src="<%= audio_path('bloop.mp3') %>" type="audio/mp3"></audio>
+  <audio loop id="room-tone" src="<%= audio_path('room_tone.mp3') %>" type="audio/mp3"></audio>
   <audio id="intro-music" src="<%= audio_path('louis_zong_intro.mp3') %>" type="audio/mp3"></audio>
 `
 wm.overlay.style.backgroundColor = 'black';
@@ -86,6 +87,7 @@ window.onload = () =>
     event.preventDefault();
     quizWindow.close();
     desktop(score);
+    document.getElementById('room-tone').play();
     startBSODTimer();
     startGameTimer(wm);
   });
