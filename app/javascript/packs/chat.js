@@ -131,6 +131,7 @@ function chatWindow(wm, character, chats) {
     backgroundColorTitlebarActive: '#7eb4f8',
     backgroundColorTitlebarInactive: '#97b4d8',
     borderRadius: "0px",
+    minimizeSize: 75,
   })
   var randomId = Math.random().toString(36).substring(2).replace(/\d/g, '')
   test.content.style.padding = '0.5em'
@@ -319,6 +320,8 @@ export function browser(wm, source)
     borderRadius: "0px",
     minimizable: true,
     maximizable: false,
+    closable: false,
+    minimizeSize: 200,
     resizable: true
   })
   test.content.style.padding = '0.5em'
