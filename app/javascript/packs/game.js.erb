@@ -32,6 +32,7 @@ wm.overlay.innerHTML = `
   <audio class="os-start" src="<%= audio_path('windowsme.mp3') %>" type="audio/mp3"></audio>
   <audio class="os-start" src="<%= audio_path('windows31.mp3') %>" type="audio/mp3"></audio>
   <audio id="bloop" src="<%= audio_path('bloop.mp3') %>" type="audio/mp3"></audio>
+  <audio id="intro-music" src="<%= audio_path('louis_zong_intro.mp3') %>" type="audio/mp3"></audio>
 `
 wm.overlay.style.backgroundColor = 'black';
 
@@ -60,6 +61,7 @@ window.onload = () =>
   document.getElementById('start-game').addEventListener('click', function(event) {
     event.preventDefault();
     var audio = document.getElementById('audio-introduction');
+    var intro_music = document.getElementById('intro-music');
     audio.addEventListener('ended', function() {
       titleScreenWindow.close();
       quizWindow.open();
@@ -69,6 +71,7 @@ window.onload = () =>
       document.querySelector('div.title-text').classList.add('invisible');
     });
     audio.play()
+    intro_music.play();
   });
   document.addEventListener('calculateScore', function(event) {
     score = event.detail;
