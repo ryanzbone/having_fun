@@ -77,7 +77,7 @@ export function textEditor(wm)
 {
   const test = wm.createWindow({
     width: 500,
-    height: 600,
+    height: 650,
     x: 400, y: 200,
     title: "Tea",
     backgroundColorWindow: '#ffffff',
