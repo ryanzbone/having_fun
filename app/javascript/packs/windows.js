@@ -102,7 +102,7 @@ Lighting - Casey Toney
 Art - Casey Toney
 Writing - Chris Berg, Casey Toney
 Game Design - Ryan Bone, Chris Berg, Casey Toney
-Music - Louis Zong
+Music - Louie Zong
 
 Fiancé - Casey Toney
 Fiancé Friend - Chris Berg
