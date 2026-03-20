@@ -80,6 +80,19 @@ window.onload = () =>
 
   runQuiz();
 
+  // Press Escape to skip intro and jump straight to desktop
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      titleScreenWindow.close();
+      quizWindow.close();
+      score = Math.floor(Math.random() * 15);
+      desktop(score);
+      document.getElementById('room-tone').play();
+      startBSODTimer();
+      startGameTimer(wm);
+    }
+  }, { once: true });
+
   window.addEventListener('scroll', function(event) { window.scroll(0, 0); });
 
   // run game loop

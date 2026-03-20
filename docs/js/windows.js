@@ -1,3 +1,5 @@
+import { initInstantWild } from './instant-wild.js';
+
 export function appIcon(idName, appWindow, x, y, icon, wm)
 {
   const test = wm.createWindow({
@@ -44,8 +46,10 @@ export function work(wm)
     maximizable: false,
     resizable: false,
   })
-  test.content.style.padding = '0.5em';
-  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="instant-wild.html"></iframe>';
+  test.content.style.padding = '0';
+  test.content.style.overflow = 'hidden';
+  test.content.innerHTML = '<div id="instant-wild-root"></div>';
+  initInstantWild(document.getElementById('instant-wild-root'));
   return test;
 }
 
