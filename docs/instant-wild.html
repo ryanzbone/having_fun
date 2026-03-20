@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instant Wild</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, Helvetica, sans-serif; background: #eef1f2; color: #333; }
+
+.header {
+  background: #80ba27;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header h1 { font-size: 18px; font-weight: bold; }
+.header h1 span { font-weight: normal; font-size: 12px; display: block; }
+.header-right { font-size: 13px; }
+.header-right a { color: white; text-decoration: underline; cursor: pointer; }
+
+.main { display: flex; height: calc(100vh - 44px); }
+
+.photo-panel {
+  flex: 1;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.photo-panel img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.photo-meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: #ccc;
+  font-size: 11px;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.camera-icon::before { content: "\ud83d\udcf7 "; }
+
+.sidebar {
+  width: 320px;
+  background: white;
+  border-left: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  background: #80ba27;
+  color: white;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.id-section { padding: 12px 16px; flex: 1; }
+
+.step-label {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.category-btn {
+  background: #f5f5f5;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+.category-btn:hover { border-color: #80ba27; background: #f0f8e0; }
+.category-btn.selected { border-color: #80ba27; background: #e8f5cc; font-weight: bold; }
+
+.species-list { margin-bottom: 16px; }
+.species-btn {
+  display: block;
+  width: 100%;
+  background: #f5f5f5;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 9px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  margin-bottom: 4px;
+}
+.species-btn:hover { border-color: #80ba27; background: #f0f8e0; }
+.species-btn.selected { border-color: #80ba27; background: #e8f5cc; font-weight: bold; }
+
+.count-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 10px 0;
+}
+.count-section label { font-size: 13px; font-weight: bold; }
+.count-section input {
+  width: 50px;
+  padding: 6px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.submit-btn {
+  background: #80ba27;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s;
+}
+.submit-btn:hover { background: #6ea21f; }
+.submit-btn:disabled { background: #ccc; cursor: default; }
+
+.no-animal-btn {
+  background: none;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
+  color: #666;
+}
+.no-animal-btn:hover { border-color: #80ba27; color: #333; }
+
+.skip-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 6px;
+  width: 100%;
+  padding: 6px;
+  text-decoration: underline;
+}
+
+.result-banner {
+  padding: 16px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  display: none;
+}
+.result-banner.correct { background: #e8f5cc; color: #4a7a0a; display: block; }
+.result-banner.incorrect { background: #fde8e8; color: #a33; display: block; }
+.result-banner.info { background: #e0eef8; color: #336; display: block; }
+
+.stats-bar {
+  border-top: 1px solid #eee;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  background: #fafafa;
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>Instant Wild <span>Conservation at your fingertips</span></h1>
+  </div>
+  <div class="header-right">
+    <span id="score-display">Score: 0</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="photo-panel">
+    <img id="trap-photo" src="" alt="Camera trap photo">
+    <div class="photo-meta">
+      <span id="camera-info" class="camera-icon">Camera 7 - Kenya</span>
+      <span id="photo-time"></span>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="sidebar-header">What do you see?</div>
+
+    <div id="result-banner" class="result-banner"></div>
+
+    <div class="id-section">
+      <div id="step1">
+        <p class="step-label">Step 1: Select a category</p>
+        <div class="category-grid" id="category-grid"></div>
+        <button class="no-animal-btn" id="no-animal-btn">No animal visible</button>
+      </div>
+
+      <div id="step2" class="hidden">
+        <p class="step-label">Step 2: Select species</p>
+        <div class="species-list" id="species-list"></div>
+        <button class="species-btn" id="unknown-species-btn" style="color:#888; text-align:center;">Unknown species</button>
+        <button class="skip-btn" id="back-btn">&larr; Back to categories</button>
+      </div>
+
+      <div id="step3" class="hidden">
+        <div class="count-section">
+          <label>How many?</label>
+          <input type="number" id="animal-count" min="1" max="99" value="1">
+        </div>
+        <button class="submit-btn" id="submit-btn">Submit</button>
+        <button class="skip-btn" id="back-btn-2">&larr; Back to species</button>
+      </div>
+
+      <div id="step-next" class="hidden" style="text-align:center; padding-top: 20px;">
+        <button class="submit-btn" id="next-btn">Next Photo</button>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <span>Photos tagged: <b id="tagged-count">0</b></span>
+      <span>Streak: <b id="streak-count">0</b></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var categories = {
+    "Large Mammal": ["Elephant", "Giraffe", "Buffalo", "Hippopotamus", "Rhinoceros", "Zebra"],
+    "Predator": ["Lion", "Leopard", "Cheetah", "Hyena", "Wild Dog", "Jackal"],
+    "Primate": ["Baboon", "Vervet Monkey", "Colobus Monkey", "Chimpanzee"],
+    "Antelope": ["Impala", "Gazelle", "Wildebeest", "Kudu", "Eland", "Waterbuck"],
+    "Small Mammal": ["Warthog", "Mongoose", "Hare", "Porcupine", "Honey Badger", "Genet"],
+    "Bird": ["Ostrich", "Secretary Bird", "Vulture", "Eagle", "Guinea Fowl", "Hornbill"],
+    "Reptile": ["Monitor Lizard", "Crocodile", "Tortoise", "Snake"],
+    "Other": ["Domestic Animal", "Human", "Vehicle"]
+  };
+
+  // Simulated camera trap "photos" - we generate colored placeholder scenes
+  var photos = [
+    { answer: "Elephant", category: "Large Mammal", camera: "Camera 7 - Kenya, Tsavo", count: 2, desc: "Two large grey shapes at waterhole" },
+    { answer: "Lion", category: "Predator", camera: "Camera 3 - Kenya, Masai Mara", count: 1, desc: "Tawny figure resting under acacia" },
+    { answer: "Impala", category: "Antelope", camera: "Camera 12 - Kenya, Amboseli", count: 5, desc: "Small herd at forest edge" },
+    { answer: "Baboon", category: "Primate", camera: "Camera 9 - Kenya, Laikipia", count: 3, desc: "Group foraging on rocks" },
+    { answer: "Zebra", category: "Large Mammal", camera: "Camera 5 - Kenya, Tsavo", count: 4, desc: "Striped animals at dusk" },
+    { answer: "Warthog", category: "Small Mammal", camera: "Camera 2 - Kenya, Lewa", count: 1, desc: "Small animal near burrow entrance" },
+    { answer: "Giraffe", category: "Large Mammal", camera: "Camera 11 - Kenya, Samburu", count: 1, desc: "Tall silhouette browsing treetops" },
+    { answer: "Vulture", category: "Bird", camera: "Camera 8 - Kenya, Masai Mara", count: 2, desc: "Large birds perched on carcass" },
+    { answer: "Leopard", category: "Predator", camera: "Camera 1 - Kenya, Laikipia", count: 1, desc: "Spotted cat in tree at night" },
+    { answer: "Wildebeest", category: "Antelope", camera: "Camera 6 - Kenya, Masai Mara", count: 8, desc: "Herd crossing dusty plain" },
+    { answer: "Hyena", category: "Predator", camera: "Camera 4 - Kenya, Tsavo", count: 2, desc: "Two figures near den at twilight" },
+    { answer: "Guinea Fowl", category: "Bird", camera: "Camera 10 - Kenya, Lewa", count: 6, desc: "Flock of spotted birds scratching" },
+    { answer: "Hippopotamus", category: "Large Mammal", camera: "Camera 14 - Kenya, Naivasha", count: 1, desc: "Large shape emerging from water" },
+    { answer: "Mongoose", category: "Small Mammal", camera: "Camera 13 - Kenya, Amboseli", count: 4, desc: "Small group darting through grass" },
+    { answer: "Gazelle", category: "Antelope", camera: "Camera 7 - Kenya, Tsavo", count: 2, desc: "Graceful animals at sunrise" },
+    { answer: null, category: null, camera: "Camera 3 - Kenya, Masai Mara", count: 0, desc: "Empty frame, wind-triggered" },
+    { answer: "Cheetah", category: "Predator", camera: "Camera 5 - Kenya, Lewa", count: 1, desc: "Slender spotted cat scanning horizon" },
+    { answer: "Buffalo", category: "Large Mammal", camera: "Camera 2 - Kenya, Tsavo", count: 3, desc: "Dark massive shapes at mudhole" },
+    { answer: "Ostrich", category: "Bird", camera: "Camera 9 - Kenya, Samburu", count: 1, desc: "Tall flightless bird striding" },
+    { answer: "Honey Badger", category: "Small Mammal", camera: "Camera 1 - Kenya, Laikipia", count: 1, desc: "Low stocky animal, night shot" },
+  ];
+
+  var photoIndex = 0;
+  var score = 0;
+  var tagged = 0;
+  var streak = 0;
+  var selectedCategory = null;
+  var selectedSpecies = null;
+  var currentPhoto = null;
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function generateTrapImage(photo) {
+    var canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 600;
+    var ctx = canvas.getContext('2d');
+
+    // Night or day
+    var isNight = photo.desc.indexOf('night') > -1 || photo.desc.indexOf('twilight') > -1 || photo.desc.indexOf('dusk') > -1;
+
+    // Sky
+    if (isNight) {
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fillRect(0, 0, 800, 350);
+    } else {
+      var skyGrad = ctx.createLinearGradient(0, 0, 0, 350);
+      skyGrad.addColorStop(0, '#87CEEB');
+      skyGrad.addColorStop(1, '#d4e8c2');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, 800, 350);
+    }
+
+    // Ground
+    ctx.fillStyle = isNight ? '#2a2a1a' : '#8B7355';
+    ctx.fillRect(0, 350, 800, 250);
+
+    // Grass tufts
+    ctx.fillStyle = isNight ? '#3a4a2a' : '#6B8E23';
+    for (var g = 0; g < 30; g++) {
+      var gx = Math.random() * 800;
+      var gy = 360 + Math.random() * 200;
+      ctx.beginPath();
+      ctx.ellipse(gx, gy, 15 + Math.random() * 20, 5 + Math.random() * 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Animal silhouettes
+    var count = photo.count || 0;
+    ctx.fillStyle = isNight ? '#444' : '#5a4a3a';
+    for (var a = 0; a < Math.min(count, 5); a++) {
+      var ax = 150 + a * 120 + Math.random() * 60;
+      var ay = 300 + Math.random() * 80;
+      var size = 20 + Math.random() * 40;
+
+      // Simple animal blob
+      ctx.beginPath();
+      ctx.ellipse(ax, ay, size * 1.2, size * 0.7, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Head
+      ctx.beginPath();
+      ctx.ellipse(ax + size, ay - size * 0.4, size * 0.4, size * 0.35, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Legs
+      ctx.fillRect(ax - size * 0.6, ay + size * 0.4, 4, size * 0.5);
+      ctx.fillRect(ax - size * 0.2, ay + size * 0.4, 4, size * 0.5);
+      ctx.fillRect(ax + size * 0.2, ay + size * 0.4, 4, size * 0.5);
+      ctx.fillRect(ax + size * 0.6, ay + size * 0.4, 4, size * 0.5);
+    }
+
+    // IR flash effect for night
+    if (isNight) {
+      var irGrad = ctx.createRadialGradient(400, 300, 50, 400, 300, 400);
+      irGrad.addColorStop(0, 'rgba(200,200,180,0.15)');
+      irGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = irGrad;
+      ctx.fillRect(0, 0, 800, 600);
+    }
+
+    // Camera trap overlay - timestamp
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(0, 560, 800, 40);
+    ctx.fillStyle = '#0f0';
+    ctx.font = '14px monospace';
+    var d = new Date();
+    d.setHours(d.getHours() - Math.floor(Math.random() * 48));
+    ctx.fillText(d.toISOString().replace('T', ' ').substring(0, 19) + '  ' + photo.camera.split(' - ')[0] + '  TEMP: ' + (18 + Math.floor(Math.random() * 15)) + 'C', 10, 582);
+
+    // Slight noise/grain
+    var imageData = ctx.getImageData(0, 0, 800, 600);
+    var data = imageData.data;
+    for (var i = 0; i < data.length; i += 4) {
+      var noise = (Math.random() - 0.5) * 20;
+      data[i] += noise;
+      data[i+1] += noise;
+      data[i+2] += noise;
+    }
+    ctx.putImageData(imageData, 0, 0);
+
+    return canvas.toDataURL('image/jpeg', 0.85);
+  }
+
+  function loadPhoto() {
+    if (photoIndex >= photos.length) {
+      shuffle(photos);
+      photoIndex = 0;
+    }
+    currentPhoto = photos[photoIndex];
+    photoIndex++;
+
+    var img = document.getElementById('trap-photo');
+    img.src = generateTrapImage(currentPhoto);
+    document.getElementById('camera-info').textContent = currentPhoto.camera;
+
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - Math.floor(Math.random() * 30));
+    document.getElementById('photo-time').textContent = d.toLocaleTimeString();
+
+    // Reset UI
+    selectedCategory = null;
+    selectedSpecies = null;
+    document.getElementById('step1').classList.remove('hidden');
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step-next').classList.add('hidden');
+    document.getElementById('result-banner').className = 'result-banner';
+    document.getElementById('result-banner').textContent = '';
+    document.getElementById('animal-count').value = 1;
+
+    renderCategories();
+  }
+
+  function renderCategories() {
+    var grid = document.getElementById('category-grid');
+    grid.innerHTML = '';
+    var keys = Object.keys(categories);
+    for (var i = 0; i < keys.length; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'category-btn';
+      btn.textContent = keys[i];
+      btn.setAttribute('data-cat', keys[i]);
+      btn.addEventListener('click', function() {
+        selectedCategory = this.getAttribute('data-cat');
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
+        renderSpecies(selectedCategory);
+      });
+      grid.appendChild(btn);
+    }
+  }
+
+  function renderSpecies(cat) {
+    var list = document.getElementById('species-list');
+    list.innerHTML = '';
+    var species = categories[cat];
+    for (var i = 0; i < species.length; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'species-btn';
+      btn.textContent = species[i];
+      btn.setAttribute('data-species', species[i]);
+      btn.addEventListener('click', function() {
+        selectedSpecies = this.getAttribute('data-species');
+        // Highlight
+        var all = list.querySelectorAll('.species-btn');
+        for (var j = 0; j < all.length; j++) all[j].classList.remove('selected');
+        this.classList.add('selected');
+        document.getElementById('unknown-species-btn').classList.remove('selected');
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step3').classList.remove('hidden');
+      });
+      list.appendChild(btn);
+    }
+  }
+
+  function showResult(correct, message) {
+    var banner = document.getElementById('result-banner');
+    banner.textContent = message;
+    banner.className = 'result-banner ' + (correct === true ? 'correct' : correct === false ? 'incorrect' : 'info');
+
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step-next').classList.remove('hidden');
+
+    tagged++;
+    document.getElementById('tagged-count').textContent = tagged;
+
+    if (correct) {
+      score += 10;
+      streak++;
+    } else {
+      streak = 0;
+    }
+    document.getElementById('score-display').textContent = 'Score: ' + score;
+    document.getElementById('streak-count').textContent = streak;
+  }
+
+  // Event listeners
+  document.getElementById('no-animal-btn').addEventListener('click', function() {
+    if (currentPhoto.answer === null) {
+      showResult(true, "Correct! No animal in this photo.");
+    } else {
+      showResult(false, "Hmm, there was a " + currentPhoto.answer + " in this photo.");
+    }
+  });
+
+  document.getElementById('unknown-species-btn').addEventListener('click', function() {
+    showResult(null, "Noted as unknown. It was: " + (currentPhoto.answer || "empty frame"));
+    tagged++;
+  });
+
+  document.getElementById('back-btn').addEventListener('click', function() {
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step1').classList.remove('hidden');
+  });
+
+  document.getElementById('back-btn-2').addEventListener('click', function() {
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  });
+
+  document.getElementById('submit-btn').addEventListener('click', function() {
+    if (!selectedSpecies) return;
+    if (selectedSpecies === currentPhoto.answer) {
+      showResult(true, "Correct! That's a " + currentPhoto.answer + "!");
+    } else {
+      showResult(false, "Not quite. It was a " + (currentPhoto.answer || "false trigger") + ".");
+    }
+  });
+
+  document.getElementById('next-btn').addEventListener('click', function() {
+    loadPhoto();
+  });
+
+  // Init
+  shuffle(photos);
+  loadPhoto();
+})();
+</script>
+</body>
+</html>

@@ -45,7 +45,7 @@ export function work(wm)
     resizable: false,
   })
   test.content.style.padding = '0.5em';
-  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="https://instantwild.zsl.org/task/95049"></iframe>';
+  test.content.innerHTML = '<iframe class="full-frame" frameborder="0" src="instant-wild.html"></iframe>';
   return test;
 }
 
