@@ -1,0 +1,221 @@
+import {
+  work,
+  play,
+  dumpster,
+  titleSplash,
+  textEditor,
+  moveWindow,
+  resizeWindow,
+  appIcon,
+} from './windows.js';
+
+import { scheduleChats, wizardChat } from './chat.js'
+
+import {
+  titleScreen,
+  quiz,
+  runQuiz,
+} from './intro.js'
+
+import {
+  gameOver
+} from './game_over.js'
+
+import WindowManager from 'simple-window-manager';
+
+const wm = new WindowManager({
+  borderRadius: '10px'
+})
+
+wm.overlay.innerHTML = `
+  <audio class="os-start" src="audios/mac.mp3" type="audio/mp3"></audio>
+  <audio class="os-start" src="audios/windowsme.mp3" type="audio/mp3"></audio>
+  <audio class="os-start" src="audios/windows31.mp3" type="audio/mp3"></audio>
+  <audio id="bloop" src="audios/bloop.mp3" type="audio/mp3"></audio>
+  <audio loop id="room-tone" src="audios/room_tone.mp3" type="audio/mp3"></audio>
+  <audio id="intro-music" src="audios/louis_zong_intro.mp3" type="audio/mp3"></audio>
+`
+wm.overlay.style.backgroundColor = 'black';
+
+var score = 0;
+var quizWindow = quiz(wm);
+var titleScreenWindow = titleScreen(wm);
+var movementInterval = 19000;
+var resizeInterval = 10000;
+var gameDuration = 926000;
+var playWindowOpensAt = 20000;
+var bsodTimer = 300000;
+var videos = [
+  'v538817827',
+  'v538881620',
+  'v538884216'
+]
+var wallpapers = [
+  'images/windows.jpg',
+  'images/vista.jpg',
+  'images/snow_leopard.jpg'
+]
+
+window.onload = () =>
+{
+  titleScreenWindow.open();
+  document.getElementById('start-game').addEventListener('click', function(event) {
+    event.preventDefault();
+    var audio = document.getElementById('audio-introduction');
+    var intro_music = document.getElementById('intro-music');
+    audio.addEventListener('ended', function() {
+      titleScreenWindow.close();
+      quizWindow.open();
+    });
+    audio.addEventListener('play', function() {
+      document.querySelector('p.intro-dialog').classList.remove('invisible');
+      document.querySelector('div.title-text').classList.add('invisible');
+    });
+    audio.play()
+    intro_music.play();
+  });
+  document.addEventListener('calculateScore', function(event) {
+    score = event.detail;
+  });
+
+  runQuiz();
+
+  window.addEventListener('scroll', function(event) { window.scroll(0, 0); });
+
+  // run game loop
+  document.getElementById('submit-quiz').addEventListener('click', function(event) {
+    event.preventDefault();
+    quizWindow.close();
+    desktop(score);
+    document.getElementById('room-tone').play();
+    startBSODTimer();
+    startGameTimer(wm);
+  });
+}
+
+function startGameTimer(wm) {
+  window.setTimeout(function() {
+    console.log('sending game over event');
+    var event = new Event('gameOver');
+    document.dispatchEvent(event);
+  }, gameDuration);
+
+  document.addEventListener('gameOver', function() {
+    console.log('game over event recieved by document');
+    gameOver(wm);
+  });
+}
+
+function desktop(score) {
+  var workWindow = work(wm);
+  var scoreIndex = scoreToIndex(score);
+  var video = videos[scoreIndex];
+  var bg = wallpapers[scoreIndex];
+  var playWindow = play(video, wm);
+
+  wm.overlay.style.backgroundImage = `url(${bg})`;
+  wm.overlay.style.backgroundSize = `cover`;
+
+  document.querySelectorAll('audio.os-start')[scoreIndex].play()
+
+  appIcon('work', workWindow, 20, 20, 'images/work.png', wm).open({ noFocus: true });
+  appIcon('play', playWindow, 140, 20, 'images/twitch.png', wm).open({ noFocus: true });
+  appIcon('text', textEditor(wm), 260, 20, 'images/text.png', wm).open({ noFocus: true });
+  appIcon('trash', dumpster(wm), 380, 20, 'images/trash.png', wm).open({ noFocus: true });
+  var chatIcon = appIcon('chat', wizardChat(wm), 500, 20, 'images/chat.png', wm).open({ noFocus: true });
+  scheduleChats(wm, chatIcon);
+
+  titleSplash(wm).open();
+
+  // workWindow.open();
+  setTimeout(function() {
+    if(playWindow.closed) {
+      playWindow.open();
+    }
+  }, playWindowOpensAt);
+  playWindow.on('open', function() {
+
+    // Set move window interval
+    window.setInterval(function() {
+      var timeUntilMove = Math.random() * movementInterval;
+      if(Math.random() > 0.5) {
+        window.setTimeout(function() {
+          moveWindow(playWindow, workWindow, (5 + (Math.random() * 10)));
+        }, timeUntilMove);;
+      }
+    }, movementInterval);
+
+    // Set resize window interval
+    window.setInterval(function() {
+      var timeUntilResize = Math.random() * resizeInterval;
+      if(Math.random() > 0.5) {
+        window.setTimeout(function() {
+          resizeWindow(playWindow, Math.random() * 10);
+        }, timeUntilResize);;
+      }
+    }, resizeInterval);
+  });
+
+  function scoreToIndex(score) {
+    if(score <= 8.33) {
+      return 0;
+    } else if (score <= 11.66) {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
+}
+
+function startBSODTimer() {
+  setTimeout(function() {
+    var event = new Event('pauseStream');
+    document.dispatchEvent(event);
+    var bsod = document.createElement('div');
+    bsod.classList.add('bsod')
+    bsod.id = 'bsod'
+    bsod.innerHTML = `
+    <audio class="os-error" src="audios/error.mp3" type="audio/mp3"></audio>
+		<div class="bsod-message mt-9000">
+			<p>
+			Some shits gone seriously wrong with your junk.
+			NOW_EYE_AM_BECM_DETH_DSTRYR_O_WRLDS<br/>
+			Through me you pass into the city of woe, Through me you pass into eternal pain, Through me among the people lost for aye.
+			</p>
+			<p>
+			Justice the founder of my fabric mov'd, To rear me was the task of power divine, Supremest wisdom, and primeval love.
+			</p>
+
+			<p>
+			Before me things create were none, save things. Eternal, and eternal I endure.<br/>
+			All hope abandon ye who enter here.
+			</p>
+
+			<p>
+			Technical information:<br/>
+			*** STOP: 0xD00000001 (0xBaB00, 0xScaD00, 0xBaB00ScaD00)<br/>
+			*** strt1.sys - Address 4VideoGamesAve, base at G1000, DateStamp 420xx69xx<br/>
+			A grenade rolls down a hill<br/>
+			The System Administrator will remember that. Make sure you do too.
+			</p>
+
+			<p>Press space to continue.</p>
+		</div>
+    `
+    document.querySelector('.bsod-point').appendChild(bsod);
+    var audio = document.querySelector('audio.os-error')
+    audio.play();
+    var event = new Event('pauseStream');
+    document.dispatchEvent(event);
+
+    var removeBsod = function(e) {
+      if(e.keyCode == 32 && !bsod.classList.contains('invisible')) {
+        bsod.classList.add('invisible');
+        var event = new Event('playStream');
+        document.dispatchEvent(event);
+      }
+    }
+
+    document.addEventListener('keypress', removeBsod);
+  }, bsodTimer);
+}

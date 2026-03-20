@@ -1,0 +1,195 @@
+export function runQuiz() {
+  var score = 0;
+  document.addEventListener('click', function (event) {
+    if(event.target.classList.contains('button-question')) {
+      event.preventDefault();
+      var context = questionContext();
+      score = score + parseInt(event.target.value);
+      context.currentQuestion.classList.add('invisible');
+
+      context.audio.addEventListener('ended', function() {
+        if(context.nextQuestion != null) {
+          context.nextQuestion.classList.remove('invisible');
+          context.dialog.classList.add('invisible');
+        } else {
+          var scoreEvent = new CustomEvent('calculateScore', { detail: score });
+          document.dispatchEvent(scoreEvent);
+          document.getElementById('submit-quiz').classList.remove('invisible');
+          document.getElementById('final-dialog').classList.add('invisible');
+        }
+      });
+      context.audio.addEventListener('play', function() {
+        if(context.nextQuestion != null) {
+          context.dialog.classList.remove('invisible');
+        } else {
+          document.getElementById('final-dialog').classList.remove('invisible');
+        }
+      });
+      context.audio.play();
+    }
+  });
+}
+
+function questionContext() {
+  var visible;
+  var questions = document.getElementsByClassName('question');
+  var qIndex = 0;
+  for(var i = 0; i < questions.length; i += 1) {
+    if(!questions[i].classList.contains('invisible')) {
+      visible = questions[i];
+      qIndex = i;
+    }
+  }
+  var audio = visible.querySelector('audio')
+  var dialog = visible.querySelector('p.dialog')
+  return {
+    audio: audio,
+    currentQuestion: visible.querySelector('div.question-and-buttons'),
+    nextQuestion: questions[qIndex + 1],
+    dialog: dialog,
+  };
+}
+
+function questionScore(question) {
+  var points = 0;
+  var answers = question.getElementsByClassName('radio-question');
+  if(answers[0].checked) { points = 1; }
+  if(answers[1].checked) { points = 2; }
+  if(answers[2].checked) { points = 3;; }
+  return points;
+}
+
+export function titleScreen(wm)
+{
+  const test = wm.createWindow({
+    width: 1200,
+    height: 800,
+    x: 100, y: 100,
+    titlebar: false,
+    maximizable: false,
+    minimizable: false,
+    resizable: false,
+    closable: false,
+    movable: false
+  })
+  test.content.style.padding = '0.5em'
+  test.content.style.backgroundColor = 'black'
+  test.content.style.color = 'white'
+  test.content.innerHTML = `
+  <div class="centered title-text">
+    <p class="mb-4">
+      This is (I Know You're Having Fun But) I'm Still Working, a game by Ryan, Chris, and Casey.
+    </p>
+    <p class="mb-4">
+      In this game you'll contribute to ecology data while dealing with a workplace that likes to have just a little too much fun. It is best enjoyed in full screen with sound on. Your choices in the beginning will affect the content of the game.
+    </p>
+
+    <p class="mb-4">If you'd like to contribute to ecology data without the fun visit <a href="https://instantwild.zsl.org">instantwild.zsl.org</a></p>
+    <button id="start-game" class="sbtn mt-5">Get To Work</button>
+  </div>
+    <audio id="audio-introduction"  src="audios/clip1.mp3" type="audio/mp3"> </audio>
+    <p class="dialog intro-dialog invisible"><i>
+      "Hey bud! Looks like you're the only one who made it back from orientation! Ha! We like to have fun around here! Ahhhhhh but no seriously, we do very important work here at GlobalEarth. Before we get you started on the database we want to see how you're going to fit in around here. Just answer the questions as honestly as possible."
+    </i></p>
+  `
+  test.win.addEventListener('test', function() { alert('wow'); });
+  return test
+}
+
+export function quiz(wm)
+{
+  const test = wm.createWindow({
+    width: 1200,
+    height: 800,
+    x: 100, y: 100,
+    titlebar: false,
+    maximizable: false,
+    minimizable: false,
+    resizable: false,
+    closable: false,
+    movable: false
+  })
+  test.content.style.padding = '0.5em'
+  test.content.style.backgroundColor = 'black'
+  test.content.style.color = 'white'
+  test.content.innerHTML = `
+    <form id="quiz">
+      <fieldset id="group1" class="centered question">
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I lose interest quickly if I don't get to learn new things.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
+        <audio src="audios/clip2.mp3" type="audio/mp3"></audio>
+        <p class="dialog invisible "><i>
+        "Two hundred and fifty slides on parking policies and pensions. HR loses as many people as they hire!"
+        </i></p>
+      </fieldset>
+
+      <fieldset id="group2" class="centered question invisible">
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I believe stories are the best way to get a point across.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
+        <audio src="audios/clip3.mp3" type="audio/mp3"></audio>
+        <p class=" invisible dialog"><i>
+        "Oh boy we love to tell stories around here! Dave in HR was telling me about a growth on his\u2026 Well let me just say that I'd have to speak with Dave in HR if I told you"
+        </i></p>
+      </fieldset>
+
+      <fieldset id="group3" class="centered question invisible">
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I need to take control of situations that seem to be out of control.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
+        <audio src="audios/clip4.mp3" type="audio/mp3"></audio>
+        <p class=" invisible dialog"><i>
+        "You know who's out of control!? That Dave in HR! But you saw the orientation Power Point, you know"
+        </i></p>
+      </fieldset>
+
+      <fieldset id="group4" class="centered question invisible">
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I believe that even the most disadvantageous peace is better than any direct conflict.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
+        <audio src="audios/clip5.mp3" type="audio/mp3"></audio>
+        <p class=" invisible dialog"><i>
+        "A girl in college told me I have a disadvantageous peace HEY OH!!!"
+        </i></p>
+      </fieldset>
+
+      <fieldset id="group5" class="centered question invisible">
+        <div class="question-and-buttons">
+          <p class="mb-5 question-text">I find it difficult to incorporate new ideas with my existing world view.</p>
+          <button class="button-question sbtn mr-3" value=1 name="group1">Always</button>
+          <button class="button-question sbtn mr-3" value=2 name="group1">Sometimes</button>
+          <button class="button-question sbtn" value=3 name="group1">Never</button>
+        </div>
+        <audio src="audios/clip6.mp3" type="audio/mp3"></audio>
+      </fieldset>
+      <p class="dialog invisible" id="final-dialog"><i>
+        "OK BOOMER! (Laughs uncontrollably) Dave says we can't say it in interviews anymore but you're already hired! (More loud obnoxious laughter)"
+        <br/>
+        Knock on the door
+        <br/>
+        (Outside voice)
+        "I know you're having fun, but I'm still working"
+
+        <br/>
+        </i>
+      </p>
+      <div class="centered">
+        <button class="invisible centered sbtn start-working" id="submit-quiz">Log In</button>
+      </div>
+  </form>
+`
+  return test
+}

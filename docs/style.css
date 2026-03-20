@@ -1,0 +1,130 @@
+body {
+  font-family: 'Montserrat', sans-serif !important;
+  background-color: black;
+  overflow: hidden !important;
+}
+
+.full-frame {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.invisible {
+  display: none !important;
+}
+
+.sbtn {
+  background-color: #7eb4f8;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif !important;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  font-size: 1.5em;
+}
+.sbtn:hover {
+  background-color: #308cff;
+  color: white;
+}
+
+.centered {
+  text-align: center;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+h2 {
+  font-size: 3em;
+}
+
+.work-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8em;
+  margin-top: 0;
+}
+
+.play-title {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 4.07em;
+  margin-bottom: 0;
+}
+.title-text {
+  width: 50%;
+  margin: auto;
+  font-size: 1.2em;
+  line-height: 1.4;
+  margin-top: 30px;
+}
+.quiz-font {
+  font-family: 'Montserrat', sans-serif;
+}
+.question-text {
+  font-size: 2.5em;
+  margin-top: 2em;
+}
+.mb-2 {
+  margin-bottom: 2em;
+}
+fieldset {
+  border: none
+}
+.start-working {
+  padding: 1.5em;
+  margin-top: 3em;
+  font-size: 4em;
+}
+textarea {
+  width: 100%;
+  height: 99%;
+  border: none;
+  resize: none;
+  font-size: 16pt;
+}
+.chat-me { text-align: right; }
+.chat-box-margin { margin-bottom: 60px; }
+.chat-log { padding: 5px; }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.mt-9000 {
+  margin-top: 250px;
+}
+
+.bsod {
+  background-color: blue;
+  color: white;
+  font-family: courier;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10000;
+  font-size: 1.5em;
+  line-height: 1.1em;
+}
+
+.bsod-message {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dialog {
+  width: 70%;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.3em;
+}
+.padding-5-lr { padding-left: 5px; padding-right: 5px; }
