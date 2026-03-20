@@ -229,6 +229,7 @@ export function play(video, wm)
     var embed = new Twitch.Embed("twitch-embed", {
       video: video,
       layout: "video",
+      parent: [window.location.hostname],
     });
     var iframe = document.getElementById('twitch-embed').querySelector('iframe');
     iframe.removeAttribute('width');
