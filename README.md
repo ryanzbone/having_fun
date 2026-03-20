@@ -5,3 +5,5 @@ A desktop/workplace simulator made for the [10th and final Idle Thumbs Wizard Ja
 Playable at http://www.stillworking.me
 
 Twitch streams in the game may not work due to changes in their API.
+
+The original game used an iframe to [Instant Wild](https://www.zsl.org/what-we-do/projects/instant-wild) by the Zoological Society of London, a citizen science tool where users identify animals from camera trap photos. Since the site is no longer available, this version includes a self-contained recreation of the tool with real wildlife photos.
